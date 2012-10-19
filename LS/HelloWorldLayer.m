@@ -12,6 +12,7 @@
 
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
+#import "BasicLevelScene.h"
 
 #pragma mark - HelloWorldLayer
 
@@ -41,18 +42,25 @@
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init]) ) {
 		
-		// create and initialize a Label
-		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
-
-		// ask director for the window size
-		CGSize size = [[CCDirector sharedDirector] winSize];
-	
-		// position the label on the center of the screen
-		label.position =  ccp( size.width /2 , size.height/2 );
+        //window size
+        CGSize size = [[CCDirector sharedDirector] winSize];
 		
-		// add the label as a child to this Layer
-		[self addChild: label];
+		// Default font size will be 55 points.
+		[CCMenuItemFont setFontSize:55];
+        
+		// Play Game Menu Item
+		CCMenuItem *itemPlayGame = [CCMenuItemFont itemWithString:@"Play!" block:^(id sender) {
+            [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInB transitionWithDuration:0.5 scene:[GameLevelLayer scene]]];
+		}
+									   ];
 		
+		CCMenu *playMenu = [CCMenu menuWithItems:itemPlayGame, nil];
+		
+		[playMenu alignItemsHorizontallyWithPadding:20];
+		[playMenu setPosition:ccp( size.width/2, size.height/2 + 0)];
+		
+		// Add the play menu to the layer
+		[self addChild:playMenu];
 		
 		
 		//
