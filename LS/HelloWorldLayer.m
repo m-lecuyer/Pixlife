@@ -50,7 +50,7 @@
         
 		// Play Game Menu Item
 		CCMenuItem *itemPlayGame = [CCMenuItemFont itemWithString:@"Play!" block:^(id sender) {
-            [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInB transitionWithDuration:0.5 scene:[GameLevelLayer scene]]];
+            [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[GameLevelLayer scene]]];
 		}
 									   ];
 		

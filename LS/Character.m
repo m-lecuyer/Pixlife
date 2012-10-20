@@ -11,6 +11,7 @@
 #import "Weapon.h"
 #import "Shotgun.h"
 #import "ls_includes.h"
+#import "SimpleAudioEngine.h"
 
 @implementation Character
 
@@ -49,6 +50,8 @@
     if (_hp == 0)
         return;
     
+    if (_hp > hp)
+        [[SimpleAudioEngine sharedEngine] playEffect:@"hurt.wav"];
     _hp = max(hp, 0);
     [self.hpLabel setString:[[NSNumber numberWithInt:_hp] stringValue]];
     if (_hp == 0) {
@@ -122,6 +125,7 @@
         [layer addChild:b];
         [layer.projectiles addObject:b];
     }
+    [[SimpleAudioEngine sharedEngine] playEffect:@"864.mp3"];
 }
 
 -(void)explodeInLayer:(CCLayer *)layer

@@ -52,3 +52,9 @@
 }
 +(id)monster;
 @end
+
+@interface FiringMonsterStrong : Monster {
+    GameLevelLayer *mLayer;
+}
++(id)monster;
+@end

@@ -11,7 +11,7 @@
 #import "Ammunition.h"
 #import "BasicLevelScene.h"
 #import "ls_includes.h"
-
+#import "SimpleAudioEngine.h"
 #import "MonsterShoot.h"
 
 @implementation Monster
@@ -33,6 +33,7 @@
         [layer.ammunitions addObject:ammo];
     }
     layer.player.ammoTot += AMMO_FOR_MONSTER_DEATH;
+    [[SimpleAudioEngine sharedEngine] playEffect:@"explosion.mp3"];
     [layer removeChild:self cleanup:YES];
 }
 
@@ -340,3 +341,74 @@
 }
 
 @end
+
+@implementation FiringMonsterStrong
+
++ (id)monster {
+    FiringMonsterStrong *monster = nil;
+    if ((monster = [[[super alloc] initWithFile:@"m7.png"] autorelease])) {
+        monster.hp = monster.hpBase = 5;
+        monster.minMoveDuration = 10;
+        monster.maxMoveDuration = 10;
+    }
+    return monster;
+}
+
+-(void) positionAndMoveInLayer:(CCLayer *)layer
+{
+    // Determine where to spawn the target along the Y axis
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    int startY = (arc4random() % 60) + winSize.height - 60 - self.contentSize.height/2;
+    
+    // Create the target slightly off-screen along the right edge,
+    // and along a random position along the Y axis as calculated above
+    self.position = ccp(winSize.width + (self.contentSize.width/2), startY);
+    [layer addChild:self];
+    
+    // Create the actions
+    id actionMoveDone = [CCCallFuncN actionWithTarget:layer
+                                             selector:@selector(spriteMoveFinished:)];
+    id actionFire = [CCCallFuncN actionWithTarget:self
+                                         selector:@selector(fire)];
+    
+    CGPoint tmp = ccp(75, startY);
+    CCFiniteTimeAction *action1 = [CCMoveTo actionWithDuration:2.5
+                                                      position:tmp];
+    tmp = ccp(75, startY-75);
+    CCFiniteTimeAction *action2 = [CCMoveTo actionWithDuration:.6
+                                                      position:tmp];
+    tmp = ccp(winSize.width-75, startY-75);
+    CCFiniteTimeAction *action3 = [CCMoveTo actionWithDuration:2.5
+                                                      position:tmp];
+    tmp = ccp(winSize.width-75, startY-150);
+    CCFiniteTimeAction *action4 = [CCMoveTo actionWithDuration:.6
+                                                      position:tmp];
+    tmp = ccp(-self.contentSize.width/2, startY-150);
+    CCFiniteTimeAction *action5 = [CCMoveTo actionWithDuration:2.5
+                                                      position:tmp];
+        
+    [self runAction:[CCSequence actions: action1, actionFire, action2, action3, actionFire, action4, action5, actionMoveDone, nil]];
+    mLayer = (GameLevelLayer *)layer;
+}
+
+-(void) fire
+{
+    for (int i = 0; i < 2; i++) {
+        CCSprite *proj = [MonsterShoot spriteWithFile:@"pixlife_pink.png"];
+        int x = self.position.x, y = self.position.y - self.boundingBox.size.height/2;
+        proj.position = ccp(x + (1-2*i)*18, y);
+        CGPoint dest = ccp(x + (1-2*i)*18, 4 * TILE_SIZE + proj.boundingBox.size.height/2);
+        float realMoveDuration = abs(y - dest.y)/285.0;
+        proj.tag = 3;
+        [proj runAction:[CCSequence actions:
+                         [CCMoveTo actionWithDuration:realMoveDuration position:dest],
+                         [CCCallFuncN actionWithTarget:mLayer selector:@selector(spriteMoveFinished:)],
+                         nil]];
+        [mLayer.monsterShoot addObject:proj];
+        [mLayer addChild:proj];
+    }
+}
+
+@end
+
+

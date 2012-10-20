@@ -12,6 +12,7 @@
 #import "ls_includes.h"
 #import "Ammunition.h"
 #import "GameResult.h"
+#import "SimpleAudioEngine.h"
 
 @interface GameLevelLayer() 
 {
@@ -92,6 +93,8 @@
         player.pointsLabel = [[CCLabelTTF alloc] initWithString:[[NSNumber numberWithInt:player.points] stringValue] fontName:@"Helvetica" fontSize:20];
         player.pointsLabel.position = ccp(400, 300);
         [self addChild:player.pointsLabel];
+        
+        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"musique_fond_Mim_suite.mp3"];
         
         [self schedule:@selector(update:)];
         [self schedule:@selector(gameLogic:) interval:1.0];
@@ -297,7 +300,7 @@
 {
     
     Monster *target = nil;
-    int mType = arc4random() % 5;
+    int mType = arc4random() % 8;
     switch (mType) {
         case 0:
             target = [WeakAndFastMonster monster];
@@ -315,13 +318,13 @@
             target = [FiringMonster monster];
             break;
         case 5:
-            target = [FiringMonster monster];
+            target = [FiringMonsterStrong monster];
             break;
         case 6:
-            target = [FiringMonster monster];
+            target = [FiringMonsterStrong monster];
             break;
         case 7:
-            target = [FiringMonster monster];
+            target = [FiringMonsterStrong monster];
             break;
         default:
             break;
