@@ -300,109 +300,119 @@
 {
     int level = player.lvl;
     
+    int monsterN = arc4random() % (level + 1);
+    
     /* not always a monster */
-    if (arc4random() % (level + 1) == 0)
+    if (monsterN == 0)
         return;
+    else if (monsterN <= 4)
+        monsterN = 1;
+    else if (monsterN < 8)
+        monsterN = 2;
+    else
+        monsterN = 3;
     
-    Monster *target = nil;
-    int mLvl = arc4random() % level;
-    int mType;
-    switch (mLvl) {
-        case 0:
-            mType = arc4random() % 2;
-            switch (mType) {
-                case 0:
-                    target = [WeakAndFastMonster monster];
-                    break;
-                case 1:
-                    target = [StrongAndSlowMonster monster];
-                    break;
-            }
-            break;
-        case 1:
-            mType = arc4random() % 2;
-            switch (mType) {
-                case 0:
-                    target = [WeakAndFastMonster monster];
-                    break;
-                case 1:
-                    target = [RunningMonster monster];
-                    break;
-            }
-            break;
-        case 2:
-            mType = arc4random() % 2;
-            switch (mType) {
-                case 0:
-                    target = [FiringMonster monster];
-                    break;
-                case 1:
-                    target = [RunningMonster monster];
-                    break;
-            }
-            break;
-        case 3:
-            mType = arc4random() % 2;
-            switch (mType) {
-                case 0:
-                    target = [RunningMonsterStrong monster];
-                    break;
-                case 1:
-                    target = [FiringMonster monster];
-                    break;
-            }
-            break;
-        case 4:
-            mType = arc4random() % 2;
-            switch (mType) {
-                case 0:
-                    target = [RunningMonsterStrong monster];
-                    break;
-                case 1:
-                    target = [FiringMonsterStrong monster];
-                    break;
-            }
-            break;
-        case 5:
-            mType = arc4random() % 2;
-            switch (mType) {
-                case 0:
-                    target = [FollowingMonster monster];
-                    break;
-                case 1:
-                    target = [FiringMonsterStrong monster];
-                    break;
-            }
-            break;
-        case 6:
-            target = [FollowingMonster monster];
-            break;
-        default:
-            mType = arc4random() % 5;
-            switch (mType) {
-                case 0:
-                    target = [FollowingMonster monster];
-                    break;
-                case 1:
-                    target = [FiringMonsterStrong monster];
-                    break;
-                case 2:
-                    target = [RunningMonsterStrong monster];
-                    break;
-                case 3:
-                    target = [FiringMonster monster];
-                    break;
-                case 4:
-                    target = [RunningMonster monster];
-                    break;
-            }
-            break;
+    for (int i = 0 ; i < monsterN ; i ++) {
+        Monster *target = nil;
+        int mLvl = arc4random() % level;
+        int mType;
+        switch (mLvl) {
+            case 0:
+                mType = arc4random() % 2;
+                switch (mType) {
+                    case 0:
+                        target = [WeakAndFastMonster monster];
+                        break;
+                    case 1:
+                        target = [StrongAndSlowMonster monster];
+                        break;
+                }
+                break;
+            case 1:
+                mType = arc4random() % 2;
+                switch (mType) {
+                    case 0:
+                        target = [WeakAndFastMonster monster];
+                        break;
+                    case 1:
+                        target = [RunningMonster monster];
+                        break;
+                }
+                break;
+            case 2:
+                mType = arc4random() % 2;
+                switch (mType) {
+                    case 0:
+                        target = [FiringMonster monster];
+                        break;
+                    case 1:
+                        target = [RunningMonster monster];
+                        break;
+                }
+                break;
+            case 3:
+                mType = arc4random() % 2;
+                switch (mType) {
+                    case 0:
+                        target = [RunningMonsterStrong monster];
+                        break;
+                    case 1:
+                        target = [FiringMonster monster];
+                        break;
+                }
+                break;
+            case 4:
+                mType = arc4random() % 2;
+                switch (mType) {
+                    case 0:
+                        target = [RunningMonsterStrong monster];
+                        break;
+                    case 1:
+                        target = [FiringMonsterStrong monster];
+                        break;
+                }
+                break;
+            case 5:
+                mType = arc4random() % 2;
+                switch (mType) {
+                    case 0:
+                        target = [FollowingMonster monster];
+                        break;
+                    case 1:
+                        target = [FiringMonsterStrong monster];
+                        break;
+                }
+                break;
+            case 6:
+                target = [FollowingMonster monster];
+                break;
+            default:
+                mType = arc4random() % 5;
+                switch (mType) {
+                    case 0:
+                        target = [FollowingMonster monster];
+                        break;
+                    case 1:
+                        target = [FiringMonsterStrong monster];
+                        break;
+                    case 2:
+                        target = [RunningMonsterStrong monster];
+                        break;
+                    case 3:
+                        target = [FiringMonster monster];
+                        break;
+                    case 4:
+                        target = [RunningMonster monster];
+                        break;
+                }
+                break;
+        }
+        
+        [target positionAndMoveInLayer:self];
+        
+        target.tag = 1;
+        [_monsters addObject:target];
     }
-    
-    [target positionAndMoveInLayer:self];
-
-    target.tag = 1;
-    [_monsters addObject:target];
 }
 
 - (void)bulletMonsterCollision
@@ -511,9 +521,9 @@
 
 - (void) accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
-    if(acceleration.y < -0.055 || (!player.onGround && acceleration.y < 0)) {  // tilting the device to the right
+    if(acceleration.y < -0.04 || (!player.onGround && acceleration.y < 0)) {  // tilting the device to the right
         player.velocity = ccp(-SPEED_OF_PLAYER, player.velocity.y);
-    } else if (acceleration.y > 0.055 || (!player.onGround && acceleration.y > 0)) {  // tilting the device to the left
+    } else if (acceleration.y > 0.04 || (!player.onGround && acceleration.y > 0)) {  // tilting the device to the left
         player.velocity = ccp(SPEED_OF_PLAYER, player.velocity.y);
     }
     else {
@@ -524,7 +534,7 @@
 -(void)gameLogic:(ccTime)dt
 {
     player.time += 1;
-    player.lvl = min(max(player.time/10, player.points/100) + 1, 10);
+    player.lvl = min(max(player.time/(player.lvl*10), player.points/(player.lvl*20)) + 1, 10);
     [self addTarget];
     player.monsterTot += 1;
 }

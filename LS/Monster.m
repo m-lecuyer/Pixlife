@@ -303,7 +303,7 @@
     if ((monster = [[[super alloc] initWithFile:@"m3_2.png"] autorelease])) {
         monster.hp = monster.hpBase = 4;
         monster.minMoveDuration = 4;
-        monster.maxMoveDuration = 5;
+        monster.maxMoveDuration = 6;
     }
     return monster;
 }
