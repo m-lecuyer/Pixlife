@@ -37,7 +37,7 @@
     [layer removeChild:self cleanup:YES];
 }
 
--(void) positionAndMoveInLayer:(CCLayer *)layer {
+-(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay {    
     // Determine where to spawn the target along the Y axis
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     int minY = self.contentSize.height/2;
@@ -78,7 +78,9 @@
     return monster;
 }
 
--(void) positionAndMoveInLayer:(CCLayer *)layer {
+-(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay {
+    id delayAction = [CCDelayTime actionWithDuration:delay];
+
     // Determine where to spawn the target along the Y axis
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     int minY = self.contentSize.height/2 + 8 * TILE_SIZE;
@@ -102,7 +104,7 @@
                                         position:ccp(-self.contentSize.width/2, actualY)];
     id actionMoveDone = [CCCallFuncN actionWithTarget:layer
                                              selector:@selector(spriteMoveFinished:)];
-    [self runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];
+    [self runAction:[CCSequence actions:delayAction, actionMove, actionMoveDone, nil]];
 
 }
 
@@ -120,7 +122,9 @@
     return monster;
 }
 
--(void) positionAndMoveInLayer:(CCLayer *)layer {
+-(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay {
+    id delayAction = [CCDelayTime actionWithDuration:delay];
+
     // Determine where to spawn the target along the Y axis
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     int minY = self.contentSize.height/2 + 8 * TILE_SIZE;
@@ -144,7 +148,7 @@
                                         position:ccp(-self.contentSize.width/2, actualY)];
     id actionMoveDone = [CCCallFuncN actionWithTarget:layer
                                              selector:@selector(spriteMoveFinished:)];
-    [self runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];
+    [self runAction:[CCSequence actions:delayAction, actionMove, actionMoveDone, nil]];
 
 }
 
@@ -162,8 +166,9 @@
     return monster;
 }
 
--(void) positionAndMoveInLayer:(CCLayer *)layer
-{
+-(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay {
+    id delayAction = [CCDelayTime actionWithDuration:delay];
+
     int loopSize = 100;
     // Determine where to spawn the target along the Y axis
     CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -228,7 +233,7 @@
     CCFiniteTimeAction *action3 = [CCMoveTo actionWithDuration:1.2
                                    position:tmp];
 
-    [self runAction:[CCSequence actions:action1, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove1], actionFire, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove2], action2, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove3], actionFire, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove4], action3, actionMoveDone , nil]];
+    [self runAction:[CCSequence actions:delayAction, action1, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove1], actionFire, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove2], action2, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove3], actionFire, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove4], action3, actionMoveDone , nil]];
     mLayer = (GameLevelLayer *)layer;
 }
 
@@ -262,7 +267,9 @@
     return monster;
 }
 
--(void) positionAndMoveInLayer:(CCLayer *)layer {
+-(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay {
+    id delayAction = [CCDelayTime actionWithDuration:delay];
+
     // Determine where to spawn the target along the Y axis
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     
@@ -290,7 +297,7 @@
                                          position:p3];
     id actionMoveDone = [CCCallFuncN actionWithTarget:layer
                                              selector:@selector(spriteMoveFinished:)];
-    [self runAction:[CCSequence actions:actionMove1, actionMove2, actionMove3, actionMoveDone, nil]];
+    [self runAction:[CCSequence actions:delayAction, actionMove1, actionMove2, actionMove3, actionMoveDone, nil]];
 
 }
 
@@ -308,7 +315,9 @@
     return monster;
 }
 
--(void) positionAndMoveInLayer:(CCLayer *)layer {
+-(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay {
+    id delayAction = [CCDelayTime actionWithDuration:delay];
+
     // Determine where to spawn the target along the Y axis
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     
@@ -336,7 +345,7 @@
                                          position:p3];
     id actionMoveDone = [CCCallFuncN actionWithTarget:layer
                                              selector:@selector(spriteMoveFinished:)];
-    [self runAction:[CCSequence actions:actionMove1, actionMove2, actionMove3, actionMoveDone, nil]];
+    [self runAction:[CCSequence actions:delayAction, actionMove1, actionMove2, actionMove3, actionMoveDone, nil]];
     
 }
 
@@ -354,8 +363,9 @@
     return monster;
 }
 
--(void) positionAndMoveInLayer:(CCLayer *)layer
-{
+-(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay {
+    id delayAction = [CCDelayTime actionWithDuration:delay];
+
     // Determine where to spawn the target along the Y axis
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     int startY = (arc4random() % 60) + winSize.height - 60 - self.contentSize.height/2;
@@ -387,7 +397,7 @@
     CCFiniteTimeAction *action5 = [CCMoveTo actionWithDuration:2.5
                                                       position:tmp];
         
-    [self runAction:[CCSequence actions: action1, actionFire, action2, action3, actionFire, action4, action5, actionMoveDone, nil]];
+    [self runAction:[CCSequence actions:delayAction, action1, actionFire, action2, action3, actionFire, action4, action5, actionMoveDone, nil]];
     mLayer = (GameLevelLayer *)layer;
 }
 
@@ -423,10 +433,10 @@
     return monster;
 }
 
--(void) positionAndMoveInLayer:(CCLayer *)layer {
+-(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay {
     // Determine where to spawn the target along the Y axis
     CGSize winSize = [[CCDirector sharedDirector] winSize];
-    int minY = self.contentSize.height/2 + 8 * TILE_SIZE;
+    int minY = self.contentSize.height/2 + 6 * TILE_SIZE;
     int maxY = winSize.height - self.contentSize.height/2;
     int rangeY = maxY - minY;
     int actualY = (arc4random() % rangeY) + minY;

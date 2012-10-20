@@ -408,7 +408,7 @@
                 break;
         }
         
-        [target positionAndMoveInLayer:self];
+        [target positionAndMoveInLayer:self withDelay:(float)i/(float)monsterN];
         
         target.tag = 1;
         [_monsters addObject:target];

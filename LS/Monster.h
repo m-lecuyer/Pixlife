@@ -23,7 +23,7 @@
 @property (nonatomic, assign) int maxMoveDuration;
 
 -(void)youRDeadInLayer:(GameLevelLayer *)layer;
--(void) positionAndMoveInLayer:(CCLayer *)layer;
+-(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay;
 
 @end
 
