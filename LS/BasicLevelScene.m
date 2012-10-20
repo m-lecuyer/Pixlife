@@ -298,35 +298,104 @@
 
 -(void)addTarget
 {
+    int level = player.lvl;
+    
+    /* not always a monster */
+    if (arc4random() % (level + 1) == 0)
+        return;
     
     Monster *target = nil;
-    int mType = arc4random() % 8;
-    switch (mType) {
+    int mLvl = arc4random() % level;
+    int mType;
+    switch (mLvl) {
         case 0:
-            target = [WeakAndFastMonster monster];
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [WeakAndFastMonster monster];
+                    break;
+                case 1:
+                    target = [StrongAndSlowMonster monster];
+                    break;
+            }
             break;
         case 1:
-            target = [StrongAndSlowMonster monster];
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [WeakAndFastMonster monster];
+                    break;
+                case 1:
+                    target = [RunningMonster monster];
+                    break;
+            }
             break;
         case 2:
-            target = [RunningMonster monster];
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [FiringMonster monster];
+                    break;
+                case 1:
+                    target = [RunningMonster monster];
+                    break;
+            }
             break;
         case 3:
-            target = [RunningMonsterStrong monster];
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [RunningMonsterStrong monster];
+                    break;
+                case 1:
+                    target = [FiringMonster monster];
+                    break;
+            }
             break;
         case 4:
-            target = [FiringMonster monster];
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [RunningMonsterStrong monster];
+                    break;
+                case 1:
+                    target = [FiringMonsterStrong monster];
+                    break;
+            }
             break;
         case 5:
-            target = [FiringMonsterStrong monster];
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [FollowingMonster monster];
+                    break;
+                case 1:
+                    target = [FiringMonsterStrong monster];
+                    break;
+            }
             break;
         case 6:
-            target = [FiringMonsterStrong monster];
-            break;
-        case 7:
-            target = [FiringMonsterStrong monster];
+            target = [FollowingMonster monster];
             break;
         default:
+            mType = arc4random() % 5;
+            switch (mType) {
+                case 0:
+                    target = [FollowingMonster monster];
+                    break;
+                case 1:
+                    target = [FiringMonsterStrong monster];
+                    break;
+                case 2:
+                    target = [RunningMonsterStrong monster];
+                    break;
+                case 3:
+                    target = [FiringMonster monster];
+                    break;
+                case 4:
+                    target = [RunningMonster monster];
+                    break;
+            }
             break;
     }
     
@@ -455,6 +524,7 @@
 -(void)gameLogic:(ccTime)dt
 {
     player.time += 1;
+    player.lvl = min(max(player.time/10, player.points/100) + 1, 10);
     [self addTarget];
     player.monsterTot += 1;
 }
@@ -477,7 +547,7 @@
     float collected = player.ammoTaken / player.ammoTot; //collector
     float escapted = (player.monsterTot - player.monsterHitted) / player.monsterTot; //uncatchable
     
-    CCScene *sc = [GameResult sceneWithAccuracy:accuracy collected:collected escaped:escapted];
+    CCScene *sc = [GameResult sceneWithAccuracy:accuracy collected:collected escaped:escapted time:player.time];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:sc]];
 }
 

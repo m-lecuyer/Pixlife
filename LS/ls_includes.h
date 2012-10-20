@@ -19,7 +19,7 @@
 #define TILE_SIZE 16
 
 #define POINTS_FOR_AMMO 1
-#define POINTS_FOR_MONSTER 10
+#define POINTS_FOR_MONSTER 1
 
 #define RANDOM_PIXLIFE(filename) {                                                          \
                             int i = (arc4random() % 4);                                     \

@@ -411,4 +411,51 @@
 
 @end
 
+@implementation FollowingMonster
+
++ (id)monster {
+    FollowingMonster *monster = nil;
+    if ((monster = [[[super alloc] initWithFile:@"m4_2.png"] autorelease])) {
+        monster.hp = monster.hpBase = 1;
+        monster.minMoveDuration = 8;
+        monster.maxMoveDuration = 12;
+    }
+    return monster;
+}
+
+-(void) positionAndMoveInLayer:(CCLayer *)layer {
+    // Determine where to spawn the target along the Y axis
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    int minY = self.contentSize.height/2 + 8 * TILE_SIZE;
+    int maxY = winSize.height - self.contentSize.height/2;
+    int rangeY = maxY - minY;
+    int actualY = (arc4random() % rangeY) + minY;
+    
+    // Create the target slightly off-screen along the right edge,
+    // and along a random position along the Y axis as calculated above
+    self.position = ccp(winSize.width + (self.contentSize.width/2), actualY);
+    [layer addChild:self];
+    
+    mLayer = (GameLevelLayer *)layer;
+    
+    [self schedule:@selector(changeDirection) interval:0.2];
+    
+}
+
+-(void) changeDirection
+{
+    CGPoint direction = ccpNormalize(ccpSub(mLayer.player.position, self.position));
+        
+    // Determine speed of the target
+    float time = 0.2;
+    float speed = 180.0 + (arc4random() % 70);
+    CGPoint destination = ccpAdd(self.position, ccpMult(direction, speed * time));
+    
+    // Create the actions
+    id actionMove = [CCMoveTo actionWithDuration:0.2
+                                        position:destination];
+    [self runAction:[CCSequence actions:actionMove, nil]];
+}
+
+@end
 

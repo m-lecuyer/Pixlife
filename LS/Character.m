@@ -17,6 +17,7 @@
 
 @synthesize gameLayer;
 
+@synthesize lvl = _lvl;
 @synthesize time = _time;
 @synthesize monsterTot = _monsterTot;
 @synthesize monsterKilled = _monsterKilled;
@@ -72,7 +73,7 @@
         return;
 
     _ammoTaken = ammoTaken;
-    self.points += POINTS_FOR_AMMO;
+    //self.points += POINTS_FOR_AMMO;
 }
 
 -(void)setMonsterKilled:(int)monsterKilled {
@@ -80,7 +81,7 @@
         return;
 
     _monsterKilled = monsterKilled;
-    self.points += POINTS_FOR_MONSTER;
+    self.points += POINTS_FOR_MONSTER * _lvl;
 }
 
 -(void)update:(ccTime)dt 

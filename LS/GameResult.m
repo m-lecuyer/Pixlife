@@ -16,7 +16,7 @@
 @synthesize collected;
 @synthesize escapted;
 
-+(CCScene *) sceneWithAccuracy:(float) accuracy collected:(float)collected escaped:(float)escaped
++(CCScene *) sceneWithAccuracy:(float) accuracy collected:(float)collected escaped:(float)escaped time:(int)time
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];

@@ -21,7 +21,7 @@
 @property (nonatomic, assign) float collected;
 @property (nonatomic, assign) float escapted;
 
-+(CCScene *) sceneWithAccuracy:(float) accuracy collected:(float)collected escaped:(float)escaped;
++(CCScene *) sceneWithAccuracy:(float) accuracy collected:(float)collected escaped:(float)escaped time:(int)time;
 
 @end
 

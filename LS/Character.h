@@ -16,6 +16,7 @@
 @interface Character : CCSprite <wallCollision> {
     GameLevelLayer *gameLayer;
     
+    int _lvl;
     int _points;
     int _time;
     int _monsterTot;
@@ -32,6 +33,7 @@
 
 @property (nonatomic, retain) GameLevelLayer *gameLayer;
 
+@property (nonatomic, assign) int lvl;
 @property (nonatomic, assign) int time;
 @property (nonatomic, assign) int monsterTot;
 @property (nonatomic, assign) int monsterKilled;

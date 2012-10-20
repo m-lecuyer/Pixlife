@@ -180,7 +180,6 @@
 		C7928BA9161E40C20007E942 /* m7-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7928BA7161E40C20007E942 /* m7-hd.png */; };
 		C7928BAA161E40C20007E942 /* m7.png in Resources */ = {isa = PBXBuildFile; fileRef = C7928BA8161E40C20007E942 /* m7.png */; };
 		C79CA9E71603C97E00CEA0DB /* hurt.wav in Resources */ = {isa = PBXBuildFile; fileRef = C79CA9E01603C97E00CEA0DB /* hurt.wav */; };
-		C79CA9E91603C97E00CEA0DB /* koalio_stand.png in Resources */ = {isa = PBXBuildFile; fileRef = C79CA9E21603C97E00CEA0DB /* koalio_stand.png */; };
 		C79CA9EC1603C97E00CEA0DB /* replay.png in Resources */ = {isa = PBXBuildFile; fileRef = C79CA9E51603C97E00CEA0DB /* replay.png */; };
 		C79CA9ED1603C97E00CEA0DB /* tileSet.png in Resources */ = {isa = PBXBuildFile; fileRef = C79CA9E61603C97E00CEA0DB /* tileSet.png */; };
 		C79CA9F11603CF2700CEA0DB /* basic_level.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C79CA9F01603CF2700CEA0DB /* basic_level.tmx */; };
@@ -497,9 +496,6 @@
 		C78958B115F297A60058A6BD /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
 		C78958B315F297A60058A6BD /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		C78958B415F297A60058A6BD /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
-		C78958BB15F297E90058A6BD /* background-music-aac.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "background-music-aac.caf"; sourceTree = "<group>"; };
-		C78958BC15F297E90058A6BD /* explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.caf; sourceTree = "<group>"; };
-		C78958BD15F297E90058A6BD /* pew-pew-lei.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pew-pew-lei.caf"; sourceTree = "<group>"; };
 		C78958BE15F297E90058A6BD /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
 		C78958CD15F29B820058A6BD /* BasicLevelScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicLevelScene.h; sourceTree = "<group>"; };
 		C78958CE15F29B820058A6BD /* BasicLevelScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicLevelScene.m; sourceTree = "<group>"; };
@@ -518,9 +514,6 @@
 		C7928BA7161E40C20007E942 /* m7-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "m7-hd.png"; sourceTree = "<group>"; };
 		C7928BA8161E40C20007E942 /* m7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m7.png; sourceTree = "<group>"; };
 		C79CA9E01603C97E00CEA0DB /* hurt.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hurt.wav; sourceTree = "<group>"; };
-		C79CA9E11603C97E00CEA0DB /* jump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jump.wav; sourceTree = "<group>"; };
-		C79CA9E21603C97E00CEA0DB /* koalio_stand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = koalio_stand.png; sourceTree = "<group>"; };
-		C79CA9E31603C97E00CEA0DB /* level1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = level1.mp3; sourceTree = "<group>"; };
 		C79CA9E51603C97E00CEA0DB /* replay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replay.png; sourceTree = "<group>"; };
 		C79CA9E61603C97E00CEA0DB /* tileSet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tileSet.png; sourceTree = "<group>"; };
 		C79CA9F01603CF2700CEA0DB /* basic_level.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = basic_level.tmx; sourceTree = "<group>"; };
@@ -690,15 +683,8 @@
 				C7226F4116069845000A7788 /* Target.png */,
 				C7226F4216069845000A7788 /* Target2.png */,
 				C79CA9F81603FFBC00CEA0DB /* Projectile.png */,
-				C79CA9E01603C97E00CEA0DB /* hurt.wav */,
-				C79CA9E11603C97E00CEA0DB /* jump.wav */,
-				C79CA9E21603C97E00CEA0DB /* koalio_stand.png */,
-				C79CA9E31603C97E00CEA0DB /* level1.mp3 */,
 				C79CA9E51603C97E00CEA0DB /* replay.png */,
 				C79CA9E61603C97E00CEA0DB /* tileSet.png */,
-				C78958BB15F297E90058A6BD /* background-music-aac.caf */,
-				C78958BC15F297E90058A6BD /* explosion.caf */,
-				C78958BD15F297E90058A6BD /* pew-pew-lei.caf */,
 				C78958BE15F297E90058A6BD /* Player.png */,
 				C79CA9F61603E3E100CEA0DB /* Projectile2.jpeg */,
 				C789573715F297A20058A6BD /* Default.png */,
@@ -1120,6 +1106,7 @@
 			children = (
 				C7F4B5DB163248BE00C6A59B /* explosion.mp3 */,
 				C7F4B5D616323EB800C6A59B /* hurt.wav */,
+				C79CA9E01603C97E00CEA0DB /* hurt.wav */,
 				C7F4B5CE16323D2900C6A59B /* 864.mp3 */,
 				C7F4B5C61632395500C6A59B /* musique_fond_Mim_suite.mp3 */,
 			);
@@ -1191,7 +1178,6 @@
 				C789574F15F297A20058A6BD /* iTunesArtwork in Resources */,
 				C789588D15F297A60058A6BD /* ChangeLog in Resources */,
 				C79CA9E71603C97E00CEA0DB /* hurt.wav in Resources */,
-				C79CA9E91603C97E00CEA0DB /* koalio_stand.png in Resources */,
 				C79CA9EC1603C97E00CEA0DB /* replay.png in Resources */,
 				C79CA9ED1603C97E00CEA0DB /* tileSet.png in Resources */,
 				C79CA9F11603CF2700CEA0DB /* basic_level.tmx in Resources */,

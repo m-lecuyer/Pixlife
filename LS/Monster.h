@@ -58,3 +58,9 @@
 }
 +(id)monster;
 @end
+
+@interface FollowingMonster : Monster {
+     GameLevelLayer *mLayer;
+}
++(id)monster;
+@end
