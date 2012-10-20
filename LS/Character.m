@@ -33,11 +33,13 @@
 @synthesize points = _points;
 @synthesize hpLabel = _hpLabel;
 @synthesize pointsLabel = _pointsLabel;
+@synthesize lvlLabel = _lvlLabel;
 
 -(id)initWithFile:(NSString *)filename 
 {
     if (self = [super initWithFile:filename]) {
         _time = _monsterTot = _monsterTot = _monsterKilled = _ammoTot = _ammoTaken = 0;
+        _lvl = 1;
 
         _points = 0;
         _hp = INITIAL_HP;
@@ -58,6 +60,15 @@
     if (_hp == 0) {
         [gameLayer scheduleOnce:@selector(gameOver) delay:.8];
     }
+}
+
+-(void)setLvl:(int)lvl {
+    if (_hp == 0)
+        return;
+
+    NSLog(@"SET %i", lvl);
+    _lvl = lvl;
+    [self.lvlLabel setString:[[NSNumber numberWithInt:_lvl] stringValue]];
 }
 
 -(void)setPoints:(int)points {

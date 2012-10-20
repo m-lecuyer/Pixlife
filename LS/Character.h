@@ -29,6 +29,7 @@
     Weapon *_weapon;
     CCLabelTTF *_hpLabel;
     CCLabelTTF *_pointsLabel;
+    CCLabelTTF *_lvlLabel;
 }
 
 @property (nonatomic, retain) GameLevelLayer *gameLayer;
@@ -49,6 +50,8 @@
 
 @property (nonatomic, retain) CCLabelTTF *hpLabel;
 @property (nonatomic, retain) CCLabelTTF *pointsLabel;
+@property (nonatomic, retain) CCLabelTTF *lvlLabel;
+
 @property (nonatomic, retain) Weapon *weapon;
 
 -(void)update:(ccTime)dt;

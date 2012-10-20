@@ -94,6 +94,11 @@
         player.pointsLabel.position = ccp(400, 300);
         [self addChild:player.pointsLabel];
         
+        player.lvlLabel = [[CCLabelTTF alloc] initWithString:[[NSNumber numberWithInt:player.lvl] stringValue] fontName:@"Helvetica" fontSize:20];
+        player.lvlLabel.position = ccp(400, 260);
+        [self addChild:player.lvlLabel];
+
+        
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"musique_fond_Mim_suite.mp3"];
         
         [self schedule:@selector(update:)];
@@ -534,7 +539,8 @@
 -(void)gameLogic:(ccTime)dt
 {
     player.time += 1;
-    player.lvl = min(max(player.time/(player.lvl*10), player.points/(player.lvl*20)) + 1, 10);
+    int lvl = max(player.time/(player.lvl*10), player.points/(player.lvl*20)) + 1;
+    player.lvl = min(max(lvl, player.lvl), 10);
     [self addTarget];
     player.monsterTot += 1;
 }
