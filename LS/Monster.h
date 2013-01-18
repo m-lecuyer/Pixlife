@@ -25,6 +25,7 @@
 -(void) youRDeadInLayer:(GameLevelLayer *)layer;
 -(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay;
 +(Monster*) generateMonsterForLevel:(int)lvl;
++(NSArray*) generateWave:(int)lvl;
 
 @end
 

@@ -307,26 +307,44 @@
     int level = player.lvl;
     
     int monsterN = arc4random() % (level + 1);
-    
     /* not always a monster */
-    if (monsterN == 0)
+    if (monsterN == 0) {
         return;
-    else if (monsterN <= 4)
+    } else if (monsterN <= 4) {
         monsterN = 1;
-    else
+    } else {
         monsterN = 2;
-    
+    }
     for (int i = 0 ; i < monsterN ; i ++) {
         Monster *target = [Monster generateMonsterForLevel:level];
         [target positionAndMoveInLayer:self withDelay:(float)i/(float)monsterN];
         target.tag = 1;
         [_monsters addObject:target];
     }
+    
+    int waveN = arc4random() % level;
+    /* not always a wave */
+    if (waveN <= 2) {
+        return;
+    } else if (waveN <= 6) {
+        waveN = 1;
+    } else {
+        waveN = 2;
+    }
+    for (int i = 0 ; i < waveN ; i ++) {
+        int j = 0;
+        NSArray *tmp = [Monster generateWave:level];
+        for (Monster *target in tmp) {
+            [target positionAndMoveInLayer:self withDelay:(float)(i+j)/(float)([tmp count])+waveN];
+            target.tag = 1;
+            [_monsters addObject:target];
+            j++;
+        }
+    }
 }
 
 - (void)bulletMonsterCollision
 {
-    
     NSMutableArray *projectilesToDelete = [[NSMutableArray alloc] init];
     for (CCSprite *projectile in _projectiles) {
         CGRect projectileRect = CGRectInset(projectile.boundingBox, 0, 0);
