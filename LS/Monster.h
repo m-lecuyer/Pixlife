@@ -22,8 +22,9 @@
 @property (nonatomic, assign) int minMoveDuration;
 @property (nonatomic, assign) int maxMoveDuration;
 
--(void)youRDeadInLayer:(GameLevelLayer *)layer;
+-(void) youRDeadInLayer:(GameLevelLayer *)layer;
 -(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay;
++(Monster*) generateMonsterForLevel:(int)lvl;
 
 @end
 

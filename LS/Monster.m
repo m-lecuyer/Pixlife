@@ -64,6 +64,106 @@
     [self runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];
 }
 
++(Monster*) generateMonsterForLevel:(int)lvl
+{
+    Monster *target = nil;
+    int mLvl = arc4random() % lvl;
+    int mType;
+    switch (mLvl) {
+        case 0:
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [WeakAndFastMonster monster];
+                    break;
+                case 1:
+                    target = [StrongAndSlowMonster monster];
+                    break;
+            }
+            break;
+        case 1:
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [WeakAndFastMonster monster];
+                    break;
+                case 1:
+                    target = [RunningMonster monster];
+                    break;
+            }
+            break;
+        case 2:
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [FiringMonster monster];
+                    break;
+                case 1:
+                    target = [RunningMonster monster];
+                    break;
+            }
+            break;
+        case 3:
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [RunningMonsterStrong monster];
+                    break;
+                case 1:
+                    target = [FiringMonster monster];
+                    break;
+            }
+            break;
+        case 4:
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [RunningMonsterStrong monster];
+                    break;
+                case 1:
+                    target = [FiringMonsterStrong monster];
+                    break;
+            }
+            break;
+        case 5:
+            mType = arc4random() % 2;
+            switch (mType) {
+                case 0:
+                    target = [FollowingMonster monster];
+                    break;
+                case 1:
+                    target = [FiringMonsterStrong monster];
+                    break;
+            }
+            break;
+        case 6:
+            target = [FollowingMonster monster];
+            break;
+        default:
+            mType = arc4random() % 5;
+            switch (mType) {
+                case 0:
+                    target = [FollowingMonster monster];
+                    break;
+                case 1:
+                    target = [FiringMonsterStrong monster];
+                    break;
+                case 2:
+                    target = [RunningMonsterStrong monster];
+                    break;
+                case 3:
+                    target = [FiringMonster monster];
+                    break;
+                case 4:
+                    target = [RunningMonster monster];
+                    break;
+            }
+            break;
+    }
+    return target;
+}
+
+
 @end
 
 @implementation WeakAndFastMonster

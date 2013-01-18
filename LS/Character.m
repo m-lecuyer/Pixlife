@@ -95,6 +95,17 @@
     self.points += POINTS_FOR_MONSTER * _lvl;
 }
 
+-(void)setVelocity:(CGPoint)velocity {
+    if (_hp == 0)
+        return;
+    _velocity = velocity;
+    if (velocity.x < 0) {
+        self.scaleX = - self.scaleX;
+    } else {
+        self.scaleX = self.scaleX;
+    }
+}
+
 -(void)update:(ccTime)dt 
 {
     if (_hp == 0)

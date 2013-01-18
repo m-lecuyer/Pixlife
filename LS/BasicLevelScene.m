@@ -51,7 +51,7 @@
 {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
-	if( (self=[super init]) ) {
+	if( (self = [super init]) ) {
         self.isTouchEnabled = YES;
         self.isAccelerometerEnabled = YES;
         //[[UIAccelerometer sharedAccelerometer] setUpdateInterval:1/60];
@@ -63,20 +63,20 @@
 
         //window size
         CGSize size = [[CCDirector sharedDirector] winSize];
-                
+        
+        // map
         map = [[CCTMXTiledMap alloc] initWithTMXFile:@"basic_level.tmx"];
         [self addChild:map];
+        walls = [map layerNamed:@"walls"];
         
+        // player
         player = [[Character alloc] initWithFile:@"astronaute.png"];
         player.gameLayer = self;
-        //player.flipX = YES;
         //player.scale = 2.0;
         //[player.texture setAliasTexParameters];
-
         player.position = ccp(240, 150);
         [map addChild:player z:15];
         
-        walls = [map layerNamed:@"walls"];        
         
         // Jump buttons
         CCMenuItem *buttonJumpLeft = [CCMenuItemImage itemWithNormalImage:@"jump_up.png" selectedImage:@"jump_down.png" target:player selector:@selector(jump)];
@@ -86,6 +86,7 @@
 		[jumpMenu setPosition:ccp(size.width/2, buttonJumpLeft.boundingBox.size.height/2)];
         [self addChild:jumpMenu z:100];
         
+        // game info labels
         player.hpLabel = [[CCLabelTTF alloc] initWithString:[[NSNumber numberWithInt:player.hp] stringValue] fontName:@"Helvetica" fontSize:20];
         player.hpLabel.position = ccp(40, 300);
         [self addChild:player.hpLabel];
@@ -98,7 +99,7 @@
         player.lvlLabel.position = ccp(400, 260);
         [self addChild:player.lvlLabel];
 
-        
+        // music
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"musique_fond_Mim_suite.mp3"];
         
         [self schedule:@selector(update:)];
@@ -312,109 +313,12 @@
         return;
     else if (monsterN <= 4)
         monsterN = 1;
-    else if (monsterN < 8)
-        monsterN = 2;
     else
-        monsterN = 3;
+        monsterN = 2;
     
     for (int i = 0 ; i < monsterN ; i ++) {
-        Monster *target = nil;
-        int mLvl = arc4random() % level;
-        int mType;
-        switch (mLvl) {
-            case 0:
-                mType = arc4random() % 2;
-                switch (mType) {
-                    case 0:
-                        target = [WeakAndFastMonster monster];
-                        break;
-                    case 1:
-                        target = [StrongAndSlowMonster monster];
-                        break;
-                }
-                break;
-            case 1:
-                mType = arc4random() % 2;
-                switch (mType) {
-                    case 0:
-                        target = [WeakAndFastMonster monster];
-                        break;
-                    case 1:
-                        target = [RunningMonster monster];
-                        break;
-                }
-                break;
-            case 2:
-                mType = arc4random() % 2;
-                switch (mType) {
-                    case 0:
-                        target = [FiringMonster monster];
-                        break;
-                    case 1:
-                        target = [RunningMonster monster];
-                        break;
-                }
-                break;
-            case 3:
-                mType = arc4random() % 2;
-                switch (mType) {
-                    case 0:
-                        target = [RunningMonsterStrong monster];
-                        break;
-                    case 1:
-                        target = [FiringMonster monster];
-                        break;
-                }
-                break;
-            case 4:
-                mType = arc4random() % 2;
-                switch (mType) {
-                    case 0:
-                        target = [RunningMonsterStrong monster];
-                        break;
-                    case 1:
-                        target = [FiringMonsterStrong monster];
-                        break;
-                }
-                break;
-            case 5:
-                mType = arc4random() % 2;
-                switch (mType) {
-                    case 0:
-                        target = [FollowingMonster monster];
-                        break;
-                    case 1:
-                        target = [FiringMonsterStrong monster];
-                        break;
-                }
-                break;
-            case 6:
-                target = [FollowingMonster monster];
-                break;
-            default:
-                mType = arc4random() % 5;
-                switch (mType) {
-                    case 0:
-                        target = [FollowingMonster monster];
-                        break;
-                    case 1:
-                        target = [FiringMonsterStrong monster];
-                        break;
-                    case 2:
-                        target = [RunningMonsterStrong monster];
-                        break;
-                    case 3:
-                        target = [FiringMonster monster];
-                        break;
-                    case 4:
-                        target = [RunningMonster monster];
-                        break;
-                }
-                break;
-        }
-        
+        Monster *target = [Monster generateMonsterForLevel:level];
         [target positionAndMoveInLayer:self withDelay:(float)i/(float)monsterN];
-        
         target.tag = 1;
         [_monsters addObject:target];
     }
@@ -470,6 +374,7 @@
         if (CGRectIntersectsRect(playerRect, monsterRect)) {
             monsterHitPlayer = TRUE;
             player.hp = player.hp - HP_LOST_FOR_MONSTER_HIT;
+            player.monsterHitted += 1;
             [monstersToDelete addObject:monster];
         }
     }
@@ -559,11 +464,11 @@
         player.ammoTot = 1;
     if (player.monsterTot == 0)
         player.monsterTot = 1;
-    float accuracy = player.monsterKilled / player.monsterTot; //sniper
-    float collected = player.ammoTaken / player.ammoTot; //collector
-    float escapted = (player.monsterTot - player.monsterHitted) / player.monsterTot; //uncatchable
-    
-    CCScene *sc = [GameResult sceneWithAccuracy:accuracy collected:collected escaped:escapted time:player.time];
+    float accuracy = (float)player.monsterKilled / (float)player.monsterTot; //sniper
+    float collected = (float)player.ammoTaken / (float)player.ammoTot; //collector
+    float escapted = ((float)player.monsterTot - (float)player.monsterHitted) / (float)player.monsterTot; //uncatchable
+
+    CCScene *sc = [GameResult sceneWithAccuracy:accuracy collected:collected escaped:escapted time:player.time lvl:player.lvl score:player.points];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:sc]];
 }
 
