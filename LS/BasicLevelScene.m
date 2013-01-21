@@ -77,7 +77,6 @@
         player.position = ccp(240, 150);
         [map addChild:player z:15];
         
-        
         // Jump buttons
         CCMenuItem *buttonJumpLeft = [CCMenuItemImage itemWithNormalImage:@"jump_up.png" selectedImage:@"jump_down.png" target:player selector:@selector(jump)];
         CCMenuItem *buttonJumpRight = [CCMenuItemImage itemWithNormalImage:@"jump_up.png" selectedImage:@"jump_down.png" target:player selector:@selector(jump)];
@@ -484,9 +483,9 @@
         player.monsterTot = 1;
     float accuracy = (float)player.monsterKilled / (float)player.monsterTot; //sniper
     float collected = (float)player.ammoTaken / (float)player.ammoTot; //collector
-    float escapted = ((float)player.monsterTot - (float)player.monsterHitted) / (float)player.monsterTot; //uncatchable
+    float escaped = ((float)player.monsterTot - (float)player.monsterHitted) / (float)player.monsterTot; //uncatchable
 
-    CCScene *sc = [GameResult sceneWithAccuracy:accuracy collected:collected escaped:escapted time:player.time lvl:player.lvl score:player.points];
+    CCScene *sc = [GameResult sceneWithAccuracy:accuracy collected:collected escaped:escaped time:player.time lvl:player.lvl score:player.points];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:sc]];
 }
 

@@ -190,7 +190,6 @@
 		C7A67710161D3E2200F94847 /* GameResult.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A6770F161D3E2200F94847 /* GameResult.m */; };
 		C7F4B5C71632395500C6A59B /* musique_fond_Mim_suite.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C7F4B5C61632395500C6A59B /* musique_fond_Mim_suite.mp3 */; };
 		C7F4B5CF16323D2900C6A59B /* 864.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C7F4B5CE16323D2900C6A59B /* 864.mp3 */; };
-		C7F4B5D716323EB800C6A59B /* hurt.wav in Resources */ = {isa = PBXBuildFile; fileRef = C7F4B5D616323EB800C6A59B /* hurt.wav */; };
 		C7F4B5DC163248BE00C6A59B /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C7F4B5DB163248BE00C6A59B /* explosion.mp3 */; };
 		C7FF285A16225D4900454095 /* MonsterShoot.m in Sources */ = {isa = PBXBuildFile; fileRef = C7FF285916225D4900454095 /* MonsterShoot.m */; };
 		C7FF285E1622642C00454095 /* pixlife_pink-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7FF285C1622642C00454095 /* pixlife_pink-hd.png */; };
@@ -525,9 +524,9 @@
 		C7A1D76E1606D18200E37FC7 /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
 		C7A6770E161D3E2200F94847 /* GameResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResult.h; sourceTree = "<group>"; };
 		C7A6770F161D3E2200F94847 /* GameResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResult.m; sourceTree = "<group>"; };
+		C7BE2D9916AA1BA000C772AC /* LS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = LS.xcodeproj; sourceTree = "<group>"; };
 		C7F4B5C61632395500C6A59B /* musique_fond_Mim_suite.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = musique_fond_Mim_suite.mp3; sourceTree = "<group>"; };
 		C7F4B5CE16323D2900C6A59B /* 864.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 864.mp3; sourceTree = "<group>"; };
-		C7F4B5D616323EB800C6A59B /* hurt.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hurt.wav; sourceTree = "<group>"; };
 		C7F4B5DB163248BE00C6A59B /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
 		C7FF285816225D4900454095 /* MonsterShoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterShoot.h; sourceTree = "<group>"; };
 		C7FF285916225D4900454095 /* MonsterShoot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterShoot.m; sourceTree = "<group>"; };
@@ -615,6 +614,7 @@
 		C789571415F297A20058A6BD = {
 			isa = PBXGroup;
 			children = (
+				C7BE2D9916AA1BA000C772AC /* LS.xcodeproj */,
 				C789573515F297A20058A6BD /* LS */,
 				C789572215F297A20058A6BD /* Frameworks */,
 				C789572015F297A20058A6BD /* Products */,
@@ -1087,6 +1087,11 @@
 			name = Monsters;
 			sourceTree = "<group>";
 		};
+		C7BE2D9A16AA1BA000C772AC /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C7C318B916040FBA008F535D /* Amo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1105,7 +1110,6 @@
 			isa = PBXGroup;
 			children = (
 				C7F4B5DB163248BE00C6A59B /* explosion.mp3 */,
-				C7F4B5D616323EB800C6A59B /* hurt.wav */,
 				C79CA9E01603C97E00CEA0DB /* hurt.wav */,
 				C7F4B5CE16323D2900C6A59B /* 864.mp3 */,
 				C7F4B5C61632395500C6A59B /* musique_fond_Mim_suite.mp3 */,
@@ -1152,6 +1156,12 @@
 			mainGroup = C789571415F297A20058A6BD;
 			productRefGroup = C789572015F297A20058A6BD /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C7BE2D9A16AA1BA000C772AC /* Products */;
+					ProjectRef = C7BE2D9916AA1BA000C772AC /* LS.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C789571E15F297A20058A6BD /* LS */,
@@ -1228,7 +1238,6 @@
 				C7FF285F1622642C00454095 /* pixlife_pink.png in Resources */,
 				C7F4B5C71632395500C6A59B /* musique_fond_Mim_suite.mp3 in Resources */,
 				C7F4B5CF16323D2900C6A59B /* 864.mp3 in Resources */,
-				C7F4B5D716323EB800C6A59B /* hurt.wav in Resources */,
 				C7F4B5DC163248BE00C6A59B /* explosion.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1409,6 +1418,10 @@
 				GCC_PREFIX_HEADER = LS/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"LS/libs/kazmath/include\"";
 				INFOPLIST_FILE = LS/Resources/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-ObjC",
@@ -1427,6 +1440,10 @@
 				GCC_PREFIX_HEADER = LS/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"LS/libs/kazmath/include\"";
 				INFOPLIST_FILE = LS/Resources/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-ObjC",

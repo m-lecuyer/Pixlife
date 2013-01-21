@@ -24,8 +24,17 @@
 
 -(void) youRDeadInLayer:(GameLevelLayer *)layer;
 -(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay;
+
 +(Monster*) generateMonsterForLevel:(int)lvl;
 +(NSArray*) generateWave:(int)lvl;
+
++(NSArray*) wave1;
++(NSArray*) wave2;
++(NSArray*) wave3;
++(NSArray*) wave4;
++(NSArray*) wave5;
++(NSArray*) wave6;
++(NSArray*) wave7;
 
 @end
 

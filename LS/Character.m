@@ -100,9 +100,9 @@
         return;
     _velocity = velocity;
     if (velocity.x < 0) {
-        self.scaleX = - self.scaleX;
+        self.scaleX = - abs(self.scaleX);
     } else {
-        self.scaleX = self.scaleX;
+        self.scaleX = abs(self.scaleX);
     }
 }
 
