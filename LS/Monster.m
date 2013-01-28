@@ -32,7 +32,7 @@
         [layer addChild:ammo];
         [layer.ammunitions addObject:ammo];
     }
-    layer.player.ammoTot += AMMO_FOR_MONSTER_DEATH;
+    layer.player.ammoTot += AMMO_FOR_MONSTER_DEATH + self.hpBase;
     [[SimpleAudioEngine sharedEngine] playEffect:@"explosion.mp3"];
     [layer removeChild:self cleanup:YES];
 }
@@ -165,7 +165,7 @@
 
 +(NSArray*) generateWave:(int)lvl
 {
-    int mType = arc4random() % 7;
+    int mType = arc4random() % lvl;
     switch (mType) {
         case 0:
             return [self wave1];
@@ -181,12 +181,14 @@
             return [self wave6];
         case 6:
             return [self wave7];
+        default:
+            return [self wave8];
     }
     return nil;
 }
 
 +(NSArray*) wave1 {
-    return [NSArray arrayWithObjects:[WeakAndFastMonster monster], [WeakAndFastMonster monster], [WeakAndFastMonster monster], nil];
+    return [NSArray arrayWithObjects:[WeakAndFastMonster monster], [WeakAndFastMonster monster], [StrongAndSlowMonster monster], nil];
 }
 
 +(NSArray*) wave2 {
@@ -194,23 +196,27 @@
 }
 
 +(NSArray*) wave3 {
-    return [NSArray arrayWithObjects:[FiringMonster monster], [FiringMonster monster], [FiringMonster monster], [RunningMonster monster], [RunningMonster monster], nil];
+    return [NSArray arrayWithObjects:[RunningMonster monster], [RunningMonster monster], [RunningMonster monster], nil];
 }
 
 +(NSArray*) wave4 {
-    return [NSArray arrayWithObjects:[FiringMonsterStrong monster], [FiringMonsterStrong monster], [FiringMonsterStrong monster], nil];
+    return [NSArray arrayWithObjects:[RunningMonsterStrong monster], [RunningMonsterStrong monster], [RunningMonsterStrong monster], nil];
 }
 
 +(NSArray*) wave5 {
-    return [NSArray arrayWithObjects:[FiringMonsterStrong monster], [FiringMonsterStrong monster], [FiringMonsterStrong monster], [RunningMonsterStrong monster], [RunningMonsterStrong monster], nil];
+    return [NSArray arrayWithObjects:[FiringMonsterStrong monster], [FiringMonsterStrong monster], [FiringMonsterStrong monster], nil];
 }
 
 +(NSArray*) wave6 {
-    return [NSArray arrayWithObjects:[FollowingMonster monster], [FollowingMonster monster], [FollowingMonster monster], nil];
+    return [NSArray arrayWithObjects:[FollowingMonster monster], [FiringMonsterStrong monster], [FiringMonsterStrong monster], nil];
 }
 
 +(NSArray*) wave7 {
-    return [NSArray arrayWithObjects:[FollowingMonster monster], [FollowingMonster monster], [FollowingMonster monster], [RunningMonster monster], [RunningMonster monster], nil];
+    return [NSArray arrayWithObjects:[FollowingMonster monster], [RunningMonsterStrong monster], [RunningMonsterStrong monster], nil];
+}
+
++(NSArray*) wave8 {
+    return [NSArray arrayWithObjects:[FollowingMonster monster], [FiringMonsterStrong monster], [RunningMonsterStrong monster], [FollowingMonster monster], [RunningMonsterStrong monster], nil];
 }
 
 @end

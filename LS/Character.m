@@ -23,7 +23,7 @@
 @synthesize monsterKilled = _monsterKilled;
 @synthesize monsterHitted = _monsterHitted;
 @synthesize ammoTot = _ammoTot;
-@synthesize ammoTaken = _ammoTaken;
+@synthesize ammoTaken = _ammoTaken, ammoShot = _ammoShot, ammoHit = _ammoHit;
 
 @synthesize velocity = _velocity;
 @synthesize desiredPosition = _desiredPosition;
@@ -148,6 +148,7 @@
         [layer addChild:b];
         [layer.projectiles addObject:b];
     }
+    self.ammoShot += [bullets count];
     [[SimpleAudioEngine sharedEngine] playEffect:@"864.mp3"];
 }
 

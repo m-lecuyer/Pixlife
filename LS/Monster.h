@@ -35,6 +35,7 @@
 +(NSArray*) wave5;
 +(NSArray*) wave6;
 +(NSArray*) wave7;
++(NSArray*) wave8;
 
 @end
 

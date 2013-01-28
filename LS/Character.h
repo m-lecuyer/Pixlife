@@ -24,6 +24,8 @@
     int _monsterHitted;
     int _ammoTot;
     int _ammoTaken;
+    int _ammoShot;
+    int _ammoHit;
     
     int _hp;
     Weapon *_weapon;
@@ -41,6 +43,8 @@
 @property (nonatomic, assign) int monsterHitted;
 @property (nonatomic, assign) int ammoTot;
 @property (nonatomic, assign) int ammoTaken;
+@property (nonatomic, assign) int ammoShot;
+@property (nonatomic, assign) int ammoHit;
 
 @property (nonatomic, assign) CGPoint velocity;
 @property (nonatomic, assign) CGPoint desiredPosition;

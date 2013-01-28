@@ -38,7 +38,7 @@
     col.position = ccp(size.width/3, 230);
     [layer addChild:col];
     
-    CCLabelTTF *esc = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Monster escaped: %i%%", (int)(100*layer.escapted)] dimensions:CGSizeMake(250, 30) hAlignment:UITextAlignmentRight fontName:@"Helvetica" fontSize:20];
+    CCLabelTTF *esc = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Monster killed: %i%%", (int)(100*layer.escapted)] dimensions:CGSizeMake(250, 30) hAlignment:UITextAlignmentRight fontName:@"Helvetica" fontSize:20];
     esc.position = ccp(size.width/3, 190);
     [layer addChild:esc];
     

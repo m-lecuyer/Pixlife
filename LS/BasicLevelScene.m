@@ -309,7 +309,7 @@
     /* not always a monster */
     if (monsterN == 0) {
         return;
-    } else if (monsterN <= 4) {
+    } else if (monsterN <= 6) {
         monsterN = 1;
     } else {
         monsterN = 2;
@@ -320,12 +320,13 @@
         target.tag = 1;
         [_monsters addObject:target];
     }
+    player.monsterTot += monsterN;
     
     int waveN = arc4random() % level;
     /* not always a wave */
     if (waveN <= 2) {
         return;
-    } else if (waveN <= 6) {
+    } else if (waveN <= 8) {
         waveN = 1;
     } else {
         waveN = 2;
@@ -333,8 +334,9 @@
     for (int i = 0 ; i < waveN ; i ++) {
         int j = 0;
         NSArray *tmp = [Monster generateWave:level];
+        player.monsterTot += [tmp count];
         for (Monster *target in tmp) {
-            [target positionAndMoveInLayer:self withDelay:(float)(i+j)/(float)([tmp count])+waveN];
+            [target positionAndMoveInLayer:self withDelay:3*(float)(i+j)/(float)([tmp count]+waveN)];
             target.tag = 1;
             [_monsters addObject:target];
             j++;
@@ -376,6 +378,7 @@
         [_projectiles removeObject:projectile];
         [self removeChild:projectile cleanup:YES];
     }
+    player.ammoHit += [projectilesToDelete count];
     [projectilesToDelete release];
 }
 
@@ -460,16 +463,16 @@
 
 -(void)gameLogic:(ccTime)dt
 {
+    // update lvl
     player.time += 1;
-    int lvl = max(player.time/(player.lvl*10), player.points/(player.lvl*20)) + 1;
+    int lvl = player.points/(player.lvl*player.lvl*5) + 1;
     player.lvl = min(max(lvl, player.lvl), 10);
+    // add tagets
     [self addTarget];
-    player.monsterTot += 1;
 }
 
 -(void)gameOver
 {
-    
     [player explodeInLayer:self];
     [map removeChild:player cleanup:YES];
     [self scheduleOnce:@selector(makeTransition) delay:1.5];
@@ -481,9 +484,9 @@
         player.ammoTot = 1;
     if (player.monsterTot == 0)
         player.monsterTot = 1;
-    float accuracy = (float)player.monsterKilled / (float)player.monsterTot; //sniper
+    float accuracy = (float)player.ammoHit / (float)player.ammoShot; //sniper
     float collected = (float)player.ammoTaken / (float)player.ammoTot; //collector
-    float escaped = ((float)player.monsterTot - (float)player.monsterHitted) / (float)player.monsterTot; //uncatchable
+    float escaped = (float)player.monsterKilled / (float)player.monsterTot; //nemsis
 
     CCScene *sc = [GameResult sceneWithAccuracy:accuracy collected:collected escaped:escaped time:player.time lvl:player.lvl score:player.points];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:sc]];
