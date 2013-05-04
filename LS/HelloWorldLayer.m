@@ -82,6 +82,13 @@
 		[playMenu setPosition:ccp(20, size.height - 20)];
 		[self addChild:playMenu];
         
+        CCSprite *img = [[CCSprite alloc] initWithFile:@"Heart.png"];
+        //player.scale = 2.0;
+        //[player.texture setAliasTexParameters];
+        img.position = ccp(size.width/2, size.height/2);
+        img.opacity = 40;
+        [self addChild:img z:-1];
+
         
         int tot = [[NSUserDefaults standardUserDefaults] integerForKey:@"bestScore"];
         CCLabelTTF *total = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Best score: %i", tot] dimensions:CGSizeMake(250, 30) hAlignment:UITextAlignmentCenter fontName:@"Helvetica" fontSize:20];
