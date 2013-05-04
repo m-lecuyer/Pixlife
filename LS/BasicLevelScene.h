@@ -24,7 +24,6 @@
 
 @interface GameLevelLayer : CCLayer {
     Character *player;
-    BOOL pause;
 }
 
 @property (getter = isInPause) BOOL pause;

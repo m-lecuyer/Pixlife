@@ -81,7 +81,20 @@
 		[playMenu alignItemsHorizontallyWithPadding:20];
 		[playMenu setPosition:ccp(20, size.height - 20)];
 		[self addChild:playMenu];
-		        
+        
+        
+        int tot = [[NSUserDefaults standardUserDefaults] integerForKey:@"bestScore"];
+        CCLabelTTF *total = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Best score: %i", tot] dimensions:CGSizeMake(250, 30) hAlignment:UITextAlignmentCenter fontName:@"Helvetica" fontSize:20];
+        total.position = ccp(size.width/2, size.height-30);
+        [self addChild:total];
+
+        CCLabelTTF *creditsMe = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Developpement and art by @MatLecu"] dimensions:CGSizeMake(400, 30) hAlignment:UITextAlignmentLeft fontName:@"Helvetica-Oblique" fontSize:12];
+        creditsMe.position = ccp(210, 25);
+        [self addChild:creditsMe];
+        CCLabelTTF *creditsFab = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Special thanks to Fabrice Lecuyer for the music"] dimensions:CGSizeMake(400, 30) hAlignment:UITextAlignmentLeft fontName:@"Helvetica-Oblique" fontSize:12];
+        creditsFab.position = ccp(210, 8);
+        [self addChild:creditsFab];
+
         [[MusicManager sharedManager] startBackgroundMusic];
 	}
 	return self;

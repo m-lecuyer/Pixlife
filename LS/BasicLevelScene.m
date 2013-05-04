@@ -32,6 +32,7 @@
 @synthesize projectiles = _projectiles;
 @synthesize ammunitions = _ammunitions;
 @synthesize monsterShoot = _monsterShoot;
+@synthesize pause = _pause;
 
 @synthesize player;
 
@@ -122,7 +123,7 @@
         /*if (![[NSUserDefaults standardUserDefaults] boolForKey:@"sound"]) {
             imageName = @"button_grey_pause.png";
         }*/
-        CCMenuItemImage *itemPause = [CCMenuItemImage itemWithNormalImage:imageNamePause selectedImage:imageName block:^(id sender) {
+        CCMenuItemImage *itemPause = [CCMenuItemImage itemWithNormalImage:imageNamePause selectedImage:imageNamePause block:^(id sender) {
             [self pauseGame];
             /*NSString *imageName = @"SoundOn.png";
             if (![[NSUserDefaults standardUserDefaults] boolForKey:@"sound"]) {
@@ -145,12 +146,12 @@
 
 - (void) pauseGame
 {
-    if (!pause) {
+    if (!_pause) {
         [[CCDirector sharedDirector] pause];
-        pause = YES;
+        _pause = YES;
     } else {
         [[CCDirector sharedDirector] resume];
-        pause = NO;
+        _pause = NO;
     }
 }
 
@@ -328,7 +329,7 @@
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (pause)
+    if (_pause)
         return;
 
     // Choose one of the touches to work with
@@ -534,9 +535,14 @@
         player.ammoTot = 1;
     if (player.monsterTot == 0)
         player.monsterTot = 1;
+    if (player.ammoShot == 0)
+        player.ammoShot = 1;
     float accuracy = (float)player.ammoHit / (float)player.ammoShot; //sniper
     float collected = (float)player.ammoTaken / (float)player.ammoTot; //collector
     float escaped = (float)player.monsterKilled / (float)player.monsterTot; //nemsis
+    if (!escaped) {
+        escaped = 0;
+    }
 
     CCScene *sc = [GameResult sceneWithAccuracy:accuracy collected:collected escaped:escaped time:player.time lvl:player.lvl score:player.points];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:sc]];
