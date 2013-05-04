@@ -69,6 +69,9 @@
     if (tot > [[NSUserDefaults standardUserDefaults] integerForKey:@"bestScore"]) {
         [[NSUserDefaults standardUserDefaults] setInteger:tot forKey:@"bestScore"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        CCLabelTTF *newBest = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"New best score!"] dimensions:CGSizeMake(250, 30) hAlignment:UITextAlignmentLeft fontName:@"Helvetica-Oblique" fontSize:12];
+        newBest.position = ccp(size.width-wR, 145);
+        [layer addChild:newBest];
     }
 	// return the scene
 	return scene;
