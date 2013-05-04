@@ -66,7 +66,12 @@
         CGSize size = [[CCDirector sharedDirector] winSize];
         
         // map
-        map = [[CCTMXTiledMap alloc] initWithTMXFile:@"basic_level.tmx"];
+        if (size.width > 480.0f || size.height > 480.0f) {
+            map = [[CCTMXTiledMap alloc] initWithTMXFile:@"basic_level5-hd.tmx"];
+        } else {
+            map = [[CCTMXTiledMap alloc] initWithTMXFile:@"basic_level.tmx"];
+        }
+
         [self addChild:map];
         walls = [map layerNamed:@"walls"];
         
