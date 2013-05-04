@@ -53,7 +53,7 @@
     [layer addChild:lv];
 
     //right
-    int bonusP = (int)(10*layer.accuracy)+(int)(10*layer.collected)+(int)(10*layer.escapted)+layer.time/10+layer.lvl;
+    int bonusP = (int)(100*layer.accuracy)+(int)(100*layer.collected)+(int)(100*layer.escapted)+layer.time+layer.lvl*10;
     if (!bonusP) {
         bonusP = 0;
     }

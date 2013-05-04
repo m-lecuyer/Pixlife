@@ -59,7 +59,7 @@
 		}];
 		CCMenu *playMenu = [CCMenu menuWithItems:itemPlayGame, nil];
 		[playMenu alignItemsHorizontallyWithPadding:20];
-		[playMenu setPosition:ccp( size.width/2, size.height/2 + 0)];
+		[playMenu setPosition:ccp( size.width/2, size.height/2+15)];
 		// Add the play menu to the layer
 		[self addChild:playMenu];
 		
@@ -85,7 +85,7 @@
         
         int tot = [[NSUserDefaults standardUserDefaults] integerForKey:@"bestScore"];
         CCLabelTTF *total = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Best score: %i", tot] dimensions:CGSizeMake(250, 30) hAlignment:UITextAlignmentCenter fontName:@"Helvetica" fontSize:20];
-        total.position = ccp(size.width/2, size.height-30);
+        total.position = ccp(size.width/2, size.height/2-35);
         [self addChild:total];
 
         CCLabelTTF *creditsMe = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Developpement and art by @MatLecu"] dimensions:CGSizeMake(400, 30) hAlignment:UITextAlignmentLeft fontName:@"Helvetica-Oblique" fontSize:12];
