@@ -23,6 +23,8 @@
     NSMutableArray *_ammunitions;
     NSMutableArray *_monsterShoot;
     CCSprite *_nextProjectile;
+    
+    int _prevWavN;
 }
 
 @end
@@ -141,6 +143,8 @@
 		[pauseMenu alignItemsHorizontallyWithPadding:20];
 		[pauseMenu setPosition:ccp(size.width - 20, size.height - 20)];
 		[self addChild:pauseMenu];
+
+        _prevWavN = 0;
 
         //[self schedule:@selector(update:)];
         [self schedule:@selector(gameLogic:) interval:1.0];
@@ -361,32 +365,16 @@
 {
     int level = player.lvl;
     
-    int monsterN = arc4random() % (level + 1);
-    /* not always a monster */
-    if (monsterN == 0) {
-        return;
-    } else if (monsterN <= 6) {
-        monsterN = 1;
-    } else {
-        monsterN = 2;
-    }
-    for (int i = 0 ; i < monsterN ; i ++) {
-        Monster *target = [Monster generateMonsterForLevel:level];
-        [target positionAndMoveInLayer:self withDelay:(float)i/(float)monsterN];
-        target.tag = 1;
-        [_monsters addObject:target];
-    }
-    player.monsterTot += monsterN;
-    
     int waveN = arc4random() % level;
     /* not always a wave */
-    if (waveN <= 2) {
-        return;
+    if (waveN <= 2+_prevWavN) {
+        waveN = 0;
     } else if (waveN <= 8) {
         waveN = 1;
     } else {
         waveN = 2;
     }
+    _prevWavN = waveN;
     for (int i = 0 ; i < waveN ; i ++) {
         int j = 0;
         NSArray *tmp = [Monster generateWave:level];
@@ -398,6 +386,24 @@
             j++;
         }
     }
+
+    int monsterN = arc4random() % (level + 1);
+    /* not always a monster */
+    if (monsterN == 0) {
+        return;
+    } else if (monsterN <= 6) {
+        monsterN = 1;
+    } else {
+        monsterN = 2;
+    }
+    monsterN -= waveN;
+    for (int i = 0 ; i < monsterN ; i ++) {
+        Monster *target = [Monster generateMonsterForLevel:level];
+        [target positionAndMoveInLayer:self withDelay:(float)i/(float)monsterN];
+        target.tag = 1;
+        [_monsters addObject:target];
+    }
+    player.monsterTot += monsterN;
 }
 
 - (void)bulletMonsterCollision
@@ -522,7 +528,6 @@
     // update lvl
     player.time += 1;
     int lvl = player.points/(player.lvl*player.lvl*5) + 1;
-    lvl=3;
     player.lvl = min(max(lvl, player.lvl), 10);
     // add tagets
     [self addTarget];

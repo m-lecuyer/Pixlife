@@ -119,7 +119,7 @@
             mType = arc4random() % 2;
             switch (mType) {
                 case 0:
-                    target = [RunningMonsterStrong monster];
+                    target = [FollowingMonster monster];
                     break;
                 case 1:
                     target = [FiringMonsterStrong monster];
