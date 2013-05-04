@@ -86,7 +86,7 @@
         //player.scale = 2.0;
         //[player.texture setAliasTexParameters];
         img.position = ccp(size.width/2, size.height/2);
-        img.opacity = 40;
+        img.opacity = 60;
         [self addChild:img z:-1];
 
         
@@ -95,11 +95,13 @@
         total.position = ccp(size.width/2, size.height/2-35);
         [self addChild:total];
 
-        CCLabelTTF *creditsMe = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Developpement and art by @MatLecu"] dimensions:CGSizeMake(400, 30) hAlignment:UITextAlignmentLeft fontName:@"Helvetica-Oblique" fontSize:12];
+        CCLabelTTF *creditsMe = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Developed by @MatLecu"] dimensions:CGSizeMake(400, 30) hAlignment:UITextAlignmentLeft fontName:@"Helvetica-Oblique" fontSize:12];
         creditsMe.position = ccp(210, 25);
+        creditsMe.opacity = 60;
         [self addChild:creditsMe];
         CCLabelTTF *creditsFab = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Special thanks to Fabrice Lecuyer for the music"] dimensions:CGSizeMake(400, 30) hAlignment:UITextAlignmentLeft fontName:@"Helvetica-Oblique" fontSize:12];
         creditsFab.position = ccp(210, 8);
+        creditsFab.opacity = 60;
         [self addChild:creditsFab];
 
         [[MusicManager sharedManager] startBackgroundMusic];

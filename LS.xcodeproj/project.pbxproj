@@ -28,6 +28,8 @@
 		C721405417357B8F00E8055B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C721405317357B8E00E8055B /* Default-568h@2x.png */; };
 		C721405617357B9F00E8055B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C721405517357B9E00E8055B /* Default@2x.png */; };
 		C721405817357FF800E8055B /* basic_level5-hd.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C721405717357FF700E8055B /* basic_level5-hd.tmx */; };
+		C721405A173594EA00E8055B /* life.png in Resources */ = {isa = PBXBuildFile; fileRef = C7214059173594E900E8055B /* life.png */; };
+		C721405C1735959200E8055B /* life-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C721405B1735959100E8055B /* life-hd.png */; };
 		C743C6F7160F521200FCFD42 /* astronaute.png in Resources */ = {isa = PBXBuildFile; fileRef = C743C6F6160F521200FCFD42 /* astronaute.png */; };
 		C743C6FA16118AE900FCFD42 /* astronaute-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C743C6F916118AE900FCFD42 /* astronaute-hd.png */; };
 		C743C6FC1612112B00FCFD42 /* basic_level-hd.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C743C6FB1612112B00FCFD42 /* basic_level-hd.tmx */; };
@@ -220,6 +222,8 @@
 		C721405317357B8E00E8055B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		C721405517357B9E00E8055B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		C721405717357FF700E8055B /* basic_level5-hd.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "basic_level5-hd.tmx"; sourceTree = "<group>"; };
+		C7214059173594E900E8055B /* life.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = life.png; sourceTree = "<group>"; };
+		C721405B1735959100E8055B /* life-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "life-hd.png"; sourceTree = "<group>"; };
 		C743C6F6160F521200FCFD42 /* astronaute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = astronaute.png; sourceTree = "<group>"; };
 		C743C6F916118AE900FCFD42 /* astronaute-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "astronaute-hd.png"; sourceTree = "<group>"; };
 		C743C6FB1612112B00FCFD42 /* basic_level-hd.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "basic_level-hd.tmx"; sourceTree = "<group>"; };
@@ -695,6 +699,8 @@
 		C789573615F297A20058A6BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C721405B1735959100E8055B /* life-hd.png */,
+				C7214059173594E900E8055B /* life.png */,
 				C721404917357ACA00E8055B /* Heart.png */,
 				C721404A17357ACB00E8055B /* WS.png */,
 				C721404B17357ACB00E8055B /* WS-5.png */,
@@ -1258,6 +1264,8 @@
 				C721405417357B8F00E8055B /* Default-568h@2x.png in Resources */,
 				C721405617357B9F00E8055B /* Default@2x.png in Resources */,
 				C721405817357FF800E8055B /* basic_level5-hd.tmx in Resources */,
+				C721405A173594EA00E8055B /* life.png in Resources */,
+				C721405C1735959200E8055B /* life-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -69,7 +69,7 @@
         
         // map
         if (size.width > 480.0f || size.height > 480.0f) {
-            map = [[CCTMXTiledMap alloc] initWithTMXFile:@"basic_level5-hd.tmx"];
+            map = [[CCTMXTiledMap alloc] initWithTMXFile:@"basic_level5.tmx"];
         } else {
             map = [[CCTMXTiledMap alloc] initWithTMXFile:@"basic_level.tmx"];
         }
@@ -95,15 +95,21 @@
         
         // game info labels
         player.hpLabel = [[CCLabelTTF alloc] initWithString:[[NSNumber numberWithInt:player.hp] stringValue] fontName:@"Helvetica" fontSize:20];
-        player.hpLabel.position = ccp(40, 300);
+        player.hpLabel.position = ccp(size.width/2-80, size.height - 22);
         [self addChild:player.hpLabel];
-        
+        CCSprite *lifeImg = [[CCSprite alloc] initWithFile:@"life.png"];
+        lifeImg.position = ccp(size.width/2-110, size.height - 22);
+        [self addChild:lifeImg];
+
         player.pointsLabel = [[CCLabelTTF alloc] initWithString:[[NSNumber numberWithInt:player.points] stringValue] fontName:@"Helvetica" fontSize:20];
-        player.pointsLabel.position = ccp(400, 300);
+        player.pointsLabel.position = ccp(size.width/2, size.height - 22);
+        player.pointsLabel.fontSize = 22;
+        player.pointsLabel.fontName = @"Helvetica-Bold";
+        player.pointsLabel.horizontalAlignment = kCCTextAlignmentCenter;
         [self addChild:player.pointsLabel];
         
         player.lvlLabel = [[CCLabelTTF alloc] initWithString:[[NSNumber numberWithInt:player.lvl] stringValue] fontName:@"Helvetica" fontSize:20];
-        player.lvlLabel.position = ccp(400, 260);
+        player.lvlLabel.position = ccp(size.width/2 + 80, size.height - 22);
         [self addChild:player.lvlLabel];
         
         // sound button

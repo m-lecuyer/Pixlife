@@ -56,7 +56,7 @@
     if (_hp > hp && [[NSUserDefaults standardUserDefaults] boolForKey:@"sound"])
         [[SimpleAudioEngine sharedEngine] playEffect:@"hurt.wav"];
     _hp = max(hp, 0);
-    [self.hpLabel setString:[[NSNumber numberWithInt:_hp] stringValue]];
+    [self.hpLabel setString:[NSString stringWithFormat:@"%i", _hp]];
     if (_hp == 0) {
         [gameLayer scheduleOnce:@selector(gameOver) delay:.8];
     }
@@ -66,7 +66,7 @@
     if (_hp == 0)
         return;
     _lvl = lvl;
-    [self.lvlLabel setString:[[NSNumber numberWithInt:_lvl] stringValue]];
+    [self.lvlLabel setString:[NSString stringWithFormat:@"lvl %i", _lvl]];
 }
 
 -(void)setPoints:(int)points {
@@ -74,7 +74,7 @@
         return;
 
     _points = points;
-    [self.pointsLabel setString:[[NSNumber numberWithInt:_points] stringValue]];
+    [self.pointsLabel setString:[NSString stringWithFormat:@"%i", _points]];
 }
 
 -(void)setAmmoTaken:(int)ammoTaken {
