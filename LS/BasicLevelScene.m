@@ -117,11 +117,41 @@
 		[playMenu setPosition:ccp(20, size.height - 20)];
 		[self addChild:playMenu];
 
+        // pause button
+        NSString *imageNamePause = @"button_grey_pause.png";
+        /*if (![[NSUserDefaults standardUserDefaults] boolForKey:@"sound"]) {
+            imageName = @"button_grey_pause.png";
+        }*/
+        CCMenuItemImage *itemPause = [CCMenuItemImage itemWithNormalImage:imageNamePause selectedImage:imageName block:^(id sender) {
+            [self pauseGame];
+            /*NSString *imageName = @"SoundOn.png";
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"sound"]) {
+                imageName = @"SoundOff.png";
+            }
+            [sender setNormalImage:[CCSprite spriteWithFile:imageName]];*/
+		}];
+        [itemPause setScale:.5];
+        CCMenu *pauseMenu = [CCMenu menuWithItems:itemPause, nil];
+		[pauseMenu alignItemsHorizontallyWithPadding:20];
+		[pauseMenu setPosition:ccp(size.width - 20, size.height - 20)];
+		[self addChild:pauseMenu];
+
         //[self schedule:@selector(update:)];
         [self schedule:@selector(gameLogic:) interval:1.0];
         [self scheduleUpdateWithPriority:-1];
 	}
 	return self;
+}
+
+- (void) pauseGame
+{
+    if (!pause) {
+        [[CCDirector sharedDirector] pause];
+        pause = YES;
+    } else {
+        [[CCDirector sharedDirector] resume];
+        pause = NO;
+    }
 }
 
 -(void)update:(ccTime)dt
@@ -298,6 +328,9 @@
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (pause)
+        return;
+
     // Choose one of the touches to work with
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];

@@ -16,6 +16,7 @@
 		C721403A1734911D00E8055B /* MusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C72140391734911D00E8055B /* MusicManager.m */; };
 		C721403D1734943900E8055B /* SoundOn.png in Resources */ = {isa = PBXBuildFile; fileRef = C721403B1734943600E8055B /* SoundOn.png */; };
 		C721403E1734943900E8055B /* SoundOff.png in Resources */ = {isa = PBXBuildFile; fileRef = C721403C1734943800E8055B /* SoundOff.png */; };
+		C721404017349D3200E8055B /* button_grey_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = C721403F17349D3100E8055B /* button_grey_pause.png */; };
 		C7226F4316069845000A7788 /* Target.png in Resources */ = {isa = PBXBuildFile; fileRef = C7226F4116069845000A7788 /* Target.png */; };
 		C7226F4416069845000A7788 /* Target2.png in Resources */ = {isa = PBXBuildFile; fileRef = C7226F4216069845000A7788 /* Target2.png */; };
 		C743C6F7160F521200FCFD42 /* astronaute.png in Resources */ = {isa = PBXBuildFile; fileRef = C743C6F6160F521200FCFD42 /* astronaute.png */; };
@@ -210,6 +211,7 @@
 		C72140391734911D00E8055B /* MusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicManager.m; sourceTree = "<group>"; };
 		C721403B1734943600E8055B /* SoundOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundOn.png; sourceTree = "<group>"; };
 		C721403C1734943800E8055B /* SoundOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundOff.png; sourceTree = "<group>"; };
+		C721403F17349D3100E8055B /* button_grey_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_grey_pause.png; sourceTree = "<group>"; };
 		C7226F4116069845000A7788 /* Target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Target.png; sourceTree = "<group>"; };
 		C7226F4216069845000A7788 /* Target2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Target2.png; sourceTree = "<group>"; };
 		C743C6F6160F521200FCFD42 /* astronaute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = astronaute.png; sourceTree = "<group>"; };
@@ -695,6 +697,7 @@
 		C789573615F297A20058A6BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C721403F17349D3100E8055B /* button_grey_pause.png */,
 				C721403B1734943600E8055B /* SoundOn.png */,
 				C721403C1734943800E8055B /* SoundOff.png */,
 				C7F4B5C91632396E00C6A59B /* Soundtrack */,
@@ -1268,6 +1271,7 @@
 				C7F4B5DC163248BE00C6A59B /* explosion.mp3 in Resources */,
 				C721403D1734943900E8055B /* SoundOn.png in Resources */,
 				C721403E1734943900E8055B /* SoundOff.png in Resources */,
+				C721404017349D3200E8055B /* button_grey_pause.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

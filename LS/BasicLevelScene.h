@@ -24,8 +24,10 @@
 
 @interface GameLevelLayer : CCLayer {
     Character *player;
+    BOOL pause;
 }
 
+@property (getter = isInPause) BOOL pause;
 @property (nonatomic, retain) Character *player;
 @property (nonatomic, retain) NSMutableArray *projectiles;
 @property (nonatomic, retain) NSMutableArray *ammunitions;

@@ -135,7 +135,7 @@
 
 -(void)jump
 {
-    if (_hp == 0)
+    if (_hp == 0 || [gameLayer isInPause])
         return;
 
     if (self.onGround)
