@@ -13,6 +13,9 @@
 		C70D49C0161DF0B80020D414 /* m3.png in Resources */ = {isa = PBXBuildFile; fileRef = C70D49BE161DF0B80020D414 /* m3.png */; };
 		C70D49C3161DF55D0020D414 /* m4-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C70D49C1161DF55D0020D414 /* m4-hd.png */; };
 		C70D49C4161DF55D0020D414 /* m4.png in Resources */ = {isa = PBXBuildFile; fileRef = C70D49C2161DF55D0020D414 /* m4.png */; };
+		C721403A1734911D00E8055B /* MusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C72140391734911D00E8055B /* MusicManager.m */; };
+		C721403D1734943900E8055B /* SoundOn.png in Resources */ = {isa = PBXBuildFile; fileRef = C721403B1734943600E8055B /* SoundOn.png */; };
+		C721403E1734943900E8055B /* SoundOff.png in Resources */ = {isa = PBXBuildFile; fileRef = C721403C1734943800E8055B /* SoundOff.png */; };
 		C7226F4316069845000A7788 /* Target.png in Resources */ = {isa = PBXBuildFile; fileRef = C7226F4116069845000A7788 /* Target.png */; };
 		C7226F4416069845000A7788 /* Target2.png in Resources */ = {isa = PBXBuildFile; fileRef = C7226F4216069845000A7788 /* Target2.png */; };
 		C743C6F7160F521200FCFD42 /* astronaute.png in Resources */ = {isa = PBXBuildFile; fileRef = C743C6F6160F521200FCFD42 /* astronaute.png */; };
@@ -203,6 +206,10 @@
 		C70D49BE161DF0B80020D414 /* m3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m3.png; sourceTree = "<group>"; };
 		C70D49C1161DF55D0020D414 /* m4-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "m4-hd.png"; sourceTree = "<group>"; };
 		C70D49C2161DF55D0020D414 /* m4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m4.png; sourceTree = "<group>"; };
+		C72140381734911D00E8055B /* MusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicManager.h; sourceTree = "<group>"; };
+		C72140391734911D00E8055B /* MusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicManager.m; sourceTree = "<group>"; };
+		C721403B1734943600E8055B /* SoundOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundOn.png; sourceTree = "<group>"; };
+		C721403C1734943800E8055B /* SoundOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundOff.png; sourceTree = "<group>"; };
 		C7226F4116069845000A7788 /* Target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Target.png; sourceTree = "<group>"; };
 		C7226F4216069845000A7788 /* Target2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Target2.png; sourceTree = "<group>"; };
 		C743C6F6160F521200FCFD42 /* astronaute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = astronaute.png; sourceTree = "<group>"; };
@@ -611,6 +618,22 @@
 			name = Monsters;
 			sourceTree = "<group>";
 		};
+		C7214036173490F900E8055B /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				C72140381734911D00E8055B /* MusicManager.h */,
+				C72140391734911D00E8055B /* MusicManager.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		C72140371734910000E8055B /* HelperClasses */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = HelperClasses;
+			sourceTree = "<group>";
+		};
 		C789571415F297A20058A6BD = {
 			isa = PBXGroup;
 			children = (
@@ -649,6 +672,8 @@
 			isa = PBXGroup;
 			children = (
 				C75E46091607D0B10016D0F4 /* ls_includes.h */,
+				C72140371734910000E8055B /* HelperClasses */,
+				C7214036173490F900E8055B /* Manager */,
 				C78958D015F29D540058A6BD /* Levels */,
 				C78958D215F29D650058A6BD /* Characters */,
 				C78958D115F29D5D0058A6BD /* Weapons */,
@@ -670,6 +695,8 @@
 		C789573615F297A20058A6BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C721403B1734943600E8055B /* SoundOn.png */,
+				C721403C1734943800E8055B /* SoundOff.png */,
 				C7F4B5C91632396E00C6A59B /* Soundtrack */,
 				C70D49BC161DEB860020D414 /* Monsters */,
 				C70D49BB161DEB770020D414 /* Button */,
@@ -1239,6 +1266,8 @@
 				C7F4B5C71632395500C6A59B /* musique_fond_Mim_suite.mp3 in Resources */,
 				C7F4B5CF16323D2900C6A59B /* 864.mp3 in Resources */,
 				C7F4B5DC163248BE00C6A59B /* explosion.mp3 in Resources */,
+				C721403D1734943900E8055B /* SoundOn.png in Resources */,
+				C721403E1734943900E8055B /* SoundOff.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1362,6 +1391,7 @@
 				C751AA561614B2B900FC7C6F /* Bullet.m in Sources */,
 				C7A67710161D3E2200F94847 /* GameResult.m in Sources */,
 				C7FF285A16225D4900454095 /* MonsterShoot.m in Sources */,
+				C721403A1734911D00E8055B /* MusicManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

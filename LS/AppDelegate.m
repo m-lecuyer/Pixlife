@@ -87,6 +87,11 @@
 	// make main window visible
 	[window_ makeKeyAndVisible];
 	
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"sound"];
+    }
+    
 	return YES;
 }
 

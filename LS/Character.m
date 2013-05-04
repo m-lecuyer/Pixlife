@@ -53,7 +53,7 @@
     if (_hp == 0)
         return;
     
-    if (_hp > hp)
+    if (_hp > hp && [[NSUserDefaults standardUserDefaults] boolForKey:@"sound"])
         [[SimpleAudioEngine sharedEngine] playEffect:@"hurt.wav"];
     _hp = max(hp, 0);
     [self.hpLabel setString:[[NSNumber numberWithInt:_hp] stringValue]];
@@ -65,8 +65,6 @@
 -(void)setLvl:(int)lvl {
     if (_hp == 0)
         return;
-
-    NSLog(@"SET %i", lvl);
     _lvl = lvl;
     [self.lvlLabel setString:[[NSNumber numberWithInt:_lvl] stringValue]];
 }
@@ -93,6 +91,13 @@
 
     _monsterKilled = monsterKilled;
     self.points += POINTS_FOR_MONSTER * _lvl;
+}
+
+-(void) setMonsterTot:(int)monsterTot {
+    if (_hp == 0)
+        return;
+
+    _monsterTot = monsterTot;
 }
 
 -(void)setVelocity:(CGPoint)velocity {
@@ -149,7 +154,9 @@
         [layer.projectiles addObject:b];
     }
     self.ammoShot += [bullets count];
-    [[SimpleAudioEngine sharedEngine] playEffect:@"864.mp3"];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"sound"]) {
+        [[SimpleAudioEngine sharedEngine] playEffect:@"864.mp3"];
+    }
 }
 
 -(void)explodeInLayer:(CCLayer *)layer

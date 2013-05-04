@@ -33,7 +33,8 @@
         [layer.ammunitions addObject:ammo];
     }
     layer.player.ammoTot += AMMO_FOR_MONSTER_DEATH + self.hpBase;
-    [[SimpleAudioEngine sharedEngine] playEffect:@"explosion.mp3"];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"sound"])
+        [[SimpleAudioEngine sharedEngine] playEffect:@"explosion.mp3"];
     [layer removeChild:self cleanup:YES];
 }
 

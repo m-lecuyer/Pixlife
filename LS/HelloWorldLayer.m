@@ -13,8 +13,14 @@
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
 #import "BasicLevelScene.h"
+#import "MusicManager.h"
 
 #pragma mark - HelloWorldLayer
+
+@interface HelloWorldLayer () {
+}
+
+@end
 
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
@@ -44,73 +50,43 @@
 		
         //window size
         CGSize size = [[CCDirector sharedDirector] winSize];
-		
 		// Default font size will be 55 points.
 		[CCMenuItemFont setFontSize:55];
-        
+        [CCMenuItemFont setFontName:@"Helvetica"];
 		// Play Game Menu Item
-		CCMenuItem *itemPlayGame = [CCMenuItemFont itemWithString:@"Play!" block:^(id sender) {
+		CCMenuItem *itemPlayGame = [CCMenuItemFont itemWithString:@"Play Pixlife" block:^(id sender) {
             [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[GameLevelLayer scene]]];
-		}
-									   ];
-		
+		}];
 		CCMenu *playMenu = [CCMenu menuWithItems:itemPlayGame, nil];
-		
 		[playMenu alignItemsHorizontallyWithPadding:20];
 		[playMenu setPosition:ccp( size.width/2, size.height/2 + 0)];
-		
 		// Add the play menu to the layer
 		[self addChild:playMenu];
 		
-		
-		//
-		// Leaderboards and Achievements
-		//
-		
-		// Default font size will be 28 points.
-		[CCMenuItemFont setFontSize:28];
-		
-		// Achievement Menu Item using blocks
-		CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
-			
-			
-			GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
-			achivementViewController.achievementDelegate = self;
-			
-			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-			
-			[[app navController] presentModalViewController:achivementViewController animated:YES];
-			
-			[achivementViewController release];
-		}
-									   ];
-
-		// Leaderboard Menu Item using blocks
-		CCMenuItem *itemLeaderboard = [CCMenuItemFont itemWithString:@"Leaderboard" block:^(id sender) {
-			
-			
-			GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
-			leaderboardViewController.leaderboardDelegate = self;
-			
-			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-			
-			[[app navController] presentModalViewController:leaderboardViewController animated:YES];
-			
-			[leaderboardViewController release];
-		}
-									   ];
-		
-		CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, nil];
-		
-		[menu alignItemsHorizontallyWithPadding:20];
-		[menu setPosition:ccp( size.width/2, size.height/2 - 50)];
-		
-		// Add the menu to the layer
-		[self addChild:menu];
-
+        // sound button
+        NSString *imageName = @"SoundOn.png";
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"sound"]) {
+            imageName = @"SoundOff.png";
+        }
+        CCMenuItemImage *itemSound = [CCMenuItemImage itemWithNormalImage:imageName selectedImage:imageName block:^(id sender) {
+            [[MusicManager sharedManager] changeSound];
+            NSString *imageName = @"SoundOn.png";
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"sound"]) {
+                imageName = @"SoundOff.png";
+            }
+            [sender setNormalImage:[CCSprite spriteWithFile:imageName]];
+		}];
+        [itemSound setScale:.2];
+        playMenu = [CCMenu menuWithItems:itemSound, nil];
+		[playMenu alignItemsHorizontallyWithPadding:20];
+		[playMenu setPosition:ccp(20, size.height - 20)];
+		[self addChild:playMenu];
+		        
+        [[MusicManager sharedManager] startBackgroundMusic];
 	}
 	return self;
 }
+
 
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc

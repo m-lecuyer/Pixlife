@@ -12,7 +12,7 @@
 #import "ls_includes.h"
 #import "Ammunition.h"
 #import "GameResult.h"
-#import "SimpleAudioEngine.h"
+#import "MusicManager.h"
 
 @interface GameLevelLayer() 
 {
@@ -97,12 +97,29 @@
         player.lvlLabel = [[CCLabelTTF alloc] initWithString:[[NSNumber numberWithInt:player.lvl] stringValue] fontName:@"Helvetica" fontSize:20];
         player.lvlLabel.position = ccp(400, 260);
         [self addChild:player.lvlLabel];
-
-        // music
-        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"musique_fond_Mim_suite.mp3"];
         
-        [self schedule:@selector(update:)];
+        // sound button
+        NSString *imageName = @"SoundOn.png";
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"sound"]) {
+            imageName = @"SoundOff.png";
+        }
+        CCMenuItemImage *itemSound = [CCMenuItemImage itemWithNormalImage:imageName selectedImage:imageName block:^(id sender) {
+            [[MusicManager sharedManager] changeSound];
+            NSString *imageName = @"SoundOn.png";
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"sound"]) {
+                imageName = @"SoundOff.png";
+            }
+            [sender setNormalImage:[CCSprite spriteWithFile:imageName]];
+		}];
+        [itemSound setScale:.2];
+        CCMenu *playMenu = [CCMenu menuWithItems:itemSound, nil];
+		[playMenu alignItemsHorizontallyWithPadding:20];
+		[playMenu setPosition:ccp(20, size.height - 20)];
+		[self addChild:playMenu];
+
+        //[self schedule:@selector(update:)];
         [self schedule:@selector(gameLogic:) interval:1.0];
+        [self scheduleUpdateWithPriority:-1];
 	}
 	return self;
 }
