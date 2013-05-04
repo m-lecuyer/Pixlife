@@ -31,7 +31,7 @@
     // stats
     //left
     CGSize size = [[CCDirector sharedDirector] winSize];
-    float wR = 85;
+    float wR = size.width/2-150;
     CCLabelTTF *acc = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Accuracy: %i%%", (int)(100*layer.accuracy)] dimensions:CGSizeMake(250, 30) hAlignment:UITextAlignmentRight fontName:@"Helvetica" fontSize:20];
     acc.position = ccp(wR, 270);
     [layer addChild:acc];
@@ -53,7 +53,7 @@
     [layer addChild:lv];
 
     //right
-    int bonusP = (int)(100*layer.accuracy)+(int)(100*layer.collected)+(int)(100*layer.escapted)+MIN(layer.time,100)+layer.lvl*10;
+    int bonusP = (int)(100*layer.accuracy)+(int)(100*layer.collected)+(int)(100*layer.escapted)+MIN(layer.time/10,100)+layer.lvl*10;
     if (!bonusP) {
         bonusP = 0;
     }

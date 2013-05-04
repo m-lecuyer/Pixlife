@@ -522,6 +522,7 @@
     // update lvl
     player.time += 1;
     int lvl = player.points/(player.lvl*player.lvl*5) + 1;
+    lvl=3;
     player.lvl = min(max(lvl, player.lvl), 10);
     // add tagets
     [self addTarget];

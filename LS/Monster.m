@@ -388,8 +388,13 @@
     tmp = ccpAdd(tmp, ccp(-2*loopSize, 0));
     CCFiniteTimeAction *action3 = [CCMoveTo actionWithDuration:1.2
                                    position:tmp];
+    
+    float t = ABS(tmp.x + self.contentSize.width/2) / 120.0;
+    tmp.x = -self.contentSize.width/2;
+    CCFiniteTimeAction *action4 = [CCMoveTo actionWithDuration:t
+                                                      position:tmp];
 
-    [self runAction:[CCSequence actions:delayAction, action1, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove1], actionFire, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove2], action2, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove3], actionFire, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove4], action3, actionMoveDone , nil]];
+    [self runAction:[CCSequence actions:delayAction, action1, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove1], actionFire, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove2], action2, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove3], actionFire, [CCBezierTo actionWithDuration:1.5 bezier:bezierMove4], action3, action4, actionMoveDone, nil]];
     mLayer = (GameLevelLayer *)layer;
 }
 
