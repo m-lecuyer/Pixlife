@@ -46,12 +46,17 @@
 	GameLevelLayer *layer = [GameLevelLayer node];
 	// add layer as a child to scene
 	[scene addChild: layer];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"noads" object:self];
+    
 	// return the scene
 	return scene;
 }
 
 -(id) init
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"noads" object:self];
+
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self = [super init]) ) {
@@ -82,7 +87,7 @@
         player.gameLayer = self;
         //player.scale = 2.0;
         //[player.texture setAliasTexParameters];
-        player.position = ccp(240, 150);
+        player.position = ccp(size.width/2, 150);
         [map addChild:player z:15];
         
         // Jump buttons
@@ -110,6 +115,7 @@
         
         player.lvlLabel = [[CCLabelTTF alloc] initWithString:[[NSNumber numberWithInt:player.lvl] stringValue] fontName:@"Helvetica" fontSize:20];
         player.lvlLabel.position = ccp(size.width/2 + 80, size.height - 22);
+        [player.lvlLabel setString:[NSString stringWithFormat:@"lvl 1"]];
         [self addChild:player.lvlLabel];
         
         // sound button
@@ -519,6 +525,9 @@
 
 - (void) accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
+    if (_pause)
+        return;
+
     if(acceleration.y < -0.04 || (!player.onGround && acceleration.y < 0)) {  // tilting the device to the right
         player.velocity = ccp(-SPEED_OF_PLAYER, player.velocity.y);
     } else if (acceleration.y > 0.04 || (!player.onGround && acceleration.y > 0)) {  // tilting the device to the left

@@ -28,6 +28,8 @@
 // Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ads" object:self];
+
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
@@ -79,7 +81,7 @@
         [itemSound setScale:.2];
         playMenu = [CCMenu menuWithItems:itemSound, nil];
 		[playMenu alignItemsHorizontallyWithPadding:20];
-		[playMenu setPosition:ccp(20, size.height - 20)];
+		[playMenu setPosition:ccp(size.width-20, 20)];
 		[self addChild:playMenu];
         
         CCSprite *img = [[CCSprite alloc] initWithFile:@"Heart.png"];
@@ -95,7 +97,7 @@
         total.position = ccp(size.width/2, size.height/2-35);
         [self addChild:total];
 
-        CCLabelTTF *creditsMe = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Developed by @MatLecu"] dimensions:CGSizeMake(400, 30) hAlignment:UITextAlignmentLeft fontName:@"Helvetica-Oblique" fontSize:12];
+        CCLabelTTF *creditsMe = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Developed by @MatLecu for Pionid"] dimensions:CGSizeMake(400, 30) hAlignment:UITextAlignmentLeft fontName:@"Helvetica-Oblique" fontSize:12];
         creditsMe.position = ccp(210, 25);
         creditsMe.opacity = 60;
         [self addChild:creditsMe];

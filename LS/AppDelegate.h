@@ -8,17 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
+#import <iAd/iAd.h>
 
-@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate>
+@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate, ADBannerViewDelegate>
 {
 	UIWindow *window_;
 	UINavigationController *navController_;
 
-	CCDirectorIOS	*director_;							// weak ref
+	CCDirectorIOS	*director_; // weak ref
+    
+    ADBannerView *iAd;
+    BOOL adOk;
 }
 
 @property (nonatomic, retain) UIWindow *window;
 @property (readonly) UINavigationController *navController;
 @property (readonly) CCDirectorIOS *director;
+@property () BOOL bannerIsVisible;
 
 @end

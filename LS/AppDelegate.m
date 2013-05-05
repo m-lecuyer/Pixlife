@@ -92,8 +92,89 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"sound"];
     }
     
+    [self displayAds];
+    
 	return YES;
 }
+
+#pragma mark - handle ads
+
+- (void) displayAds
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stopAds)
+                                                 name:@"noads" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(startAds)
+                                                 name:@"ads" object:nil];
+
+    CGSize size = [[CCDirector sharedDirector] winSize];
+
+    iAd = [[ADBannerView alloc] initWithFrame:CGRectZero];
+    iAd.requiredContentSizeIdentifiers = [NSSet setWithObject:ADBannerContentSizeIdentifierLandscape];
+    iAd.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
+
+    CGRect r = iAd.frame;
+    r.origin.x = size.width-r.size.width;
+    [iAd setFrame:r];
+    self.bannerIsVisible = NO;
+    iAd.frame = CGRectOffset(iAd.frame, 0, -iAd.frame.size.height);
+    iAd.delegate = self;
+    //iAd.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
+
+    [window_.rootViewController.view addSubview:iAd];
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    if (!self.bannerIsVisible && adOk)
+    {
+        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
+        // Assumes the banner view is just off the bottom of the screen.
+        banner.frame = CGRectOffset(banner.frame, 0, banner.frame.size.height);
+        [UIView commitAnimations];
+        self.bannerIsVisible = YES;
+    }
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    if (self.bannerIsVisible)
+    {
+        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
+        // Assumes the banner view is placed at the bottom of the screen.
+        banner.frame = CGRectOffset(banner.frame, 0, -banner.frame.size.height);
+        [UIView commitAnimations];
+        self.bannerIsVisible = NO;
+    }
+}
+
+-(void) stopAds
+{
+    adOk = NO;
+    if (self.bannerIsVisible)
+    {
+        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
+        // Assumes the banner view is placed at the bottom of the screen.
+        iAd.frame = CGRectOffset(iAd.frame, 0, -iAd.frame.size.height);
+        [UIView commitAnimations];
+        self.bannerIsVisible = NO;
+    }
+}
+
+-(void) startAds
+{
+    adOk = YES;
+    if (!self.bannerIsVisible && iAd.isBannerLoaded)
+    {
+        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
+        // Assumes the banner view is just off the bottom of the screen.
+        iAd.frame = CGRectOffset(iAd.frame, 0, iAd.frame.size.height);
+        [UIView commitAnimations];
+        self.bannerIsVisible = YES;
+    }
+}
+
 
 // Supported orientations: Landscape. Customize it for your own needs
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

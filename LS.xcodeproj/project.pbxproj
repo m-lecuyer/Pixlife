@@ -30,6 +30,8 @@
 		C721405817357FF800E8055B /* basic_level5-hd.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C721405717357FF700E8055B /* basic_level5-hd.tmx */; };
 		C721405A173594EA00E8055B /* life.png in Resources */ = {isa = PBXBuildFile; fileRef = C7214059173594E900E8055B /* life.png */; };
 		C721405C1735959200E8055B /* life-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C721405B1735959100E8055B /* life-hd.png */; };
+		C721405E1735CBE200E8055B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C721405D1735CBE200E8055B /* iAd.framework */; };
+		C72140601735CBF800E8055B /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C721405F1735CBF800E8055B /* AdSupport.framework */; };
 		C743C6F7160F521200FCFD42 /* astronaute.png in Resources */ = {isa = PBXBuildFile; fileRef = C743C6F6160F521200FCFD42 /* astronaute.png */; };
 		C743C6FA16118AE900FCFD42 /* astronaute-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C743C6F916118AE900FCFD42 /* astronaute-hd.png */; };
 		C743C6FC1612112B00FCFD42 /* basic_level-hd.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C743C6FB1612112B00FCFD42 /* basic_level-hd.tmx */; };
@@ -224,6 +226,8 @@
 		C721405717357FF700E8055B /* basic_level5-hd.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "basic_level5-hd.tmx"; sourceTree = "<group>"; };
 		C7214059173594E900E8055B /* life.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = life.png; sourceTree = "<group>"; };
 		C721405B1735959100E8055B /* life-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "life-hd.png"; sourceTree = "<group>"; };
+		C721405D1735CBE200E8055B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		C721405F1735CBF800E8055B /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		C743C6F6160F521200FCFD42 /* astronaute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = astronaute.png; sourceTree = "<group>"; };
 		C743C6F916118AE900FCFD42 /* astronaute-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "astronaute-hd.png"; sourceTree = "<group>"; };
 		C743C6FB1612112B00FCFD42 /* basic_level-hd.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "basic_level-hd.tmx"; sourceTree = "<group>"; };
@@ -545,6 +549,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C72140601735CBF800E8055B /* AdSupport.framework in Frameworks */,
+				C721405E1735CBE200E8055B /* iAd.framework in Frameworks */,
 				C789572415F297A20058A6BD /* QuartzCore.framework in Frameworks */,
 				C789572615F297A20058A6BD /* OpenGLES.framework in Frameworks */,
 				C789572815F297A20058A6BD /* OpenAL.framework in Frameworks */,
@@ -636,6 +642,8 @@
 		C789571415F297A20058A6BD = {
 			isa = PBXGroup;
 			children = (
+				C721405F1735CBF800E8055B /* AdSupport.framework */,
+				C721405D1735CBE200E8055B /* iAd.framework */,
 				C721405517357B9E00E8055B /* Default@2x.png */,
 				C721405317357B8E00E8055B /* Default-568h@2x.png */,
 				C721404F17357ADC00E8055B /* Default.png */,
