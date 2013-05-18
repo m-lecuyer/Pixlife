@@ -527,11 +527,19 @@
 {
     if (_pause)
         return;
+    
+    int oR = 0;
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if(orientation == UIInterfaceOrientationLandscapeLeft)
+        oR = 1;
+    else if(orientation == UIInterfaceOrientationLandscapeRight)
+        oR = -1;
+
 
     if(acceleration.y < -0.04 || (!player.onGround && acceleration.y < 0)) {  // tilting the device to the right
-        player.velocity = ccp(-SPEED_OF_PLAYER, player.velocity.y);
+        player.velocity = ccp(- oR * SPEED_OF_PLAYER, player.velocity.y);
     } else if (acceleration.y > 0.04 || (!player.onGround && acceleration.y > 0)) {  // tilting the device to the left
-        player.velocity = ccp(SPEED_OF_PLAYER, player.velocity.y);
+        player.velocity = ccp(oR * SPEED_OF_PLAYER, player.velocity.y);
     }
     else {
         player.velocity = ccp(0, player.velocity.y);
