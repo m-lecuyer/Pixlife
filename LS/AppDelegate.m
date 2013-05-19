@@ -92,6 +92,9 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"sound"];
     }
     
+    //GADInterstitial *splashInterstitial_ = [[GADInterstitial alloc] init];
+    //splashInterstitial_.adUnitID = @"a151859a0d6c329";
+    //[splashInterstitial_ loadAndDisplayRequest:[GADRequest request] usingWindow:window_ initialImage:[UIImage imageNamed:@"Default.png"]];
     [self displayAds];
     
 	return YES;
@@ -110,6 +113,7 @@
 
     CGSize size = [[CCDirector sharedDirector] winSize];
 
+    // iAd
     iAd = [[ADBannerView alloc] initWithFrame:CGRectZero];
     iAd.requiredContentSizeIdentifiers = [NSSet setWithObject:ADBannerContentSizeIdentifierLandscape];
     iAd.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
@@ -117,62 +121,119 @@
     CGRect r = iAd.frame;
     r.origin.x = size.width-r.size.width;
     [iAd setFrame:r];
-    self.bannerIsVisible = NO;
+    iAdIsVisible = NO;
     iAd.frame = CGRectOffset(iAd.frame, 0, -iAd.frame.size.height);
     iAd.delegate = self;
     //iAd.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
-
     [window_.rootViewController.view addSubview:iAd];
-}
 
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    if (!self.bannerIsVisible && adOk)
-    {
-        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
-        // Assumes the banner view is just off the bottom of the screen.
-        banner.frame = CGRectOffset(banner.frame, 0, banner.frame.size.height);
-        [UIView commitAnimations];
-        self.bannerIsVisible = YES;
-    }
-}
-
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    if (self.bannerIsVisible)
-    {
-        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
-        // Assumes the banner view is placed at the bottom of the screen.
-        banner.frame = CGRectOffset(banner.frame, 0, -banner.frame.size.height);
-        [UIView commitAnimations];
-        self.bannerIsVisible = NO;
-    }
+    // admob
+    // Create a view of the standard size at the top of the screen.
+    // Available AdSize constants are explained in GADAdSize.h.
+    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerLandscape];
+    bannerView_.frame = CGRectOffset(bannerView_.frame, 0, -bannerView_.frame.size.height);
+    admobIsVisible = NO;
+    admobLoaded = NO;
+    // Specify the ad's "unit identifier". This is your AdMob Publisher ID.
+    bannerView_.adUnitID = @"a151859a0d6c329";
+    // Let the runtime know which UIViewController to restore after taking
+    // the user wherever the ad goes and add it to the view hierarchy.
+    bannerView_.rootViewController = window_.rootViewController;
+    [window_.rootViewController.view addSubview:bannerView_];
+    // Initiate a generic request to load it with an ad.
+    [bannerView_ loadRequest:[GADRequest request]];
 }
 
 -(void) stopAds
 {
     adOk = NO;
-    if (self.bannerIsVisible)
-    {
-        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
-        // Assumes the banner view is placed at the bottom of the screen.
-        iAd.frame = CGRectOffset(iAd.frame, 0, -iAd.frame.size.height);
-        [UIView commitAnimations];
-        self.bannerIsVisible = NO;
-    }
+    [self hideAd];
 }
 
 -(void) startAds
 {
     adOk = YES;
-    if (!self.bannerIsVisible && iAd.isBannerLoaded)
-    {
-        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
+    [self showAd];
+}
+
+- (void) showAd
+{
+    if (iAd.isBannerLoaded) {
+        [self stateIAdForShow:YES];
+        [self stateAdMobForShow:NO];
+    } else if (admobLoaded) {
+        [self stateIAdForShow:NO];
+        [self stateAdMobForShow:YES];
+    } else {
+        [self stateIAdForShow:NO];
+        [self stateAdMobForShow:NO];
+    }
+}
+
+- (void) hideAd
+{
+    [self stateIAdForShow:NO];
+    [self stateAdMobForShow:NO];
+}
+
+- (void) stateIAdForShow:(BOOL)show
+{
+    if (show && !iAdIsVisible) {
+        [UIView beginAnimations:@"animateIAdBannerOn" context:NULL];
         // Assumes the banner view is just off the bottom of the screen.
         iAd.frame = CGRectOffset(iAd.frame, 0, iAd.frame.size.height);
         [UIView commitAnimations];
-        self.bannerIsVisible = YES;
+        iAdIsVisible = YES;
+    } else if (!show && iAdIsVisible) {
+        [UIView beginAnimations:@"animateIAdBannerOff" context:NULL];
+        // Assumes the banner view is placed at the bottom of the screen.
+        iAd.frame = CGRectOffset(iAd.frame, 0, -iAd.frame.size.height);
+        [UIView commitAnimations];
+        iAdIsVisible = NO;
     }
+}
+
+- (void) stateAdMobForShow:(BOOL)show
+{
+    if (show && !admobIsVisible) {
+        [UIView beginAnimations:@"animateAdMobBannerOn" context:NULL];
+        // Assumes the banner view is just off the bottom of the screen.
+        bannerView_.frame = CGRectOffset(bannerView_.frame, 0, bannerView_.frame.size.height);
+        [UIView commitAnimations];
+        admobIsVisible = YES;
+    } else if (!show && admobIsVisible) {
+        [UIView beginAnimations:@"animateAdMobBannerOff" context:NULL];
+        // Assumes the banner view is just off the bottom of the screen.
+        bannerView_.frame = CGRectOffset(bannerView_.frame, 0, -bannerView_.frame.size.height);
+        [UIView commitAnimations];
+        admobIsVisible = NO;
+    }
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    if (adOk)
+        [self showAd];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    if (adOk)
+        [self showAd];
+}
+
+- (void)adViewDidReceiveAd:(GADBannerView *)bannerView
+{
+    admobLoaded = YES;
+    if (adOk)
+        [self showAd];
+}
+
+- (void)adView:(GADBannerView *)bannerView didFailToReceiveAdWithError:(GADRequestError *)error
+{
+    admobLoaded = NO;
+    if (adOk)
+        [self showAd];
 }
 
 
@@ -181,7 +242,6 @@
 {
 	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
-
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application

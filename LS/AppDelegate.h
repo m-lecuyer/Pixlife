@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
 #import <iAd/iAd.h>
+#import "GADBannerView.h"
+#import "GADInterstitial.h"
 
-@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate, ADBannerViewDelegate>
+@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate, ADBannerViewDelegate, GADBannerViewDelegate>
 {
 	UIWindow *window_;
 	UINavigationController *navController_;
@@ -19,11 +21,15 @@
     
     ADBannerView *iAd;
     BOOL adOk;
+    GADBannerView *bannerView_;
+    GADInterstitial *interstitial_;
+    BOOL iAdIsVisible;
+    BOOL admobIsVisible;
+    BOOL admobLoaded;
 }
 
 @property (nonatomic, retain) UIWindow *window;
 @property (readonly) UINavigationController *navController;
 @property (readonly) CCDirectorIOS *director;
-@property () BOOL bannerIsVisible;
 
 @end
