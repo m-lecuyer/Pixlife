@@ -8,7 +8,7 @@
 
 #import "Ammunition.h"
 #import "ls_includes.h"
-#import "ls_includes.h"
+#import "BasicLevelScene.h"
 
 @implementation Ammunition
 
@@ -17,40 +17,37 @@
 @synthesize onGround = _onGround;
 @synthesize lifeTime = _lifeTime;
 
-+(id)initRandom
+- (id)initWithSpaceManager:(SpaceManagerCocos2d *)spaceManager gameLayer:(CCLayer*)gameLayer location:(CGPoint)location spriteFrameName:(NSString *)spriteFrameName
+{
+    if (self = [super initWithFile:spriteFrameName]) {
+        self.shape = [spaceManager addRectAt:location mass:0.01 width:self.contentSize.width height:self.contentSize.height rotation:0];
+        self.shape->data = self;
+        self.shape->collision_type = [self class];
+        self.shape->e = 0.0f;
+        cpBodySetMoment(self.body, INFINITY);
+        self.spaceManager = spaceManager;
+        _lifeTime = 0;
+        _onGround = NO;
+        _gameLayer = gameLayer;
+        
+        id d = [CCDelayTime actionWithDuration:AMMO_LIFE_TIME];
+		id c = [CCCallFunc actionWithTarget:self selector:@selector(remove)];
+        [self runAction:[CCSequence actions:d,c,nil]];
+    }
+    return self;
+}
+
++(id)initRandomWithSpaceManager:(SpaceManagerCocos2d *)spaceManager gameLayer:(CCLayer*)gmaeLAyer location:(CGPoint)location
 {
     Ammunition *b = [Ammunition alloc];
     //NSString *filename = [NSString stringWithFormat:@"pixlife.png"];
     NSString *filename;
     RANDOM_PIXLIFE(filename);
-    if ((b = [b initWithFile:filename])) {
+    if ((b = [b initWithSpaceManager:spaceManager gameLayer:gmaeLAyer location:location spriteFrameName:filename])) {
         b.lifeTime = 0;
         b.onGround = NO;
     }
     return b;
-}
-
--(id)initWithFile:(NSString *)filename
-{
-    if (self = [super initWithFile:filename]) {
-        _lifeTime = 0;
-        _onGround = NO;
-    }
-    return self;
-}
-
--(void)update:(ccTime)dt
-{
-    _lifeTime += dt;
-    //TODO remove when out of the window
-    
-    CGPoint gravity = ccp(0.0, -G);
-    CGPoint gravityStep = ccpMult(gravity, dt);
-    self.velocity = ccpAdd(self.velocity, gravityStep);
-    CGPoint stepVelocity = ccpMult(self.velocity, dt);
-    self.desiredPosition = ccpAdd(self.position, stepVelocity);
-    if (_onGround)
-        self.velocity = ccp(0, 0);
 }
 
 -(CGRect)collisionBoundingBox {
@@ -60,6 +57,10 @@
     return returnBoundingBox;
 }
 
-
+-(void) remove {
+    [_gameLayer removeChild:self cleanup:YES];
+    [self.spaceManager removeAndFreeShape:self.shape];
+    [((GameLevelLayer *)_gameLayer).ammunitions removeObject:self];
+}
 
 @end

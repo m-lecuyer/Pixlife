@@ -8,9 +8,11 @@
 
 #import "cocos2d.h"
 #import "BasicLevelScene.h"
+#import "SpaceManagerCocos2d.h"
 
-@interface Ammunition : CCSprite <wallCollision> {
+@interface Ammunition : cpCCSprite {
     float _lifeTime;
+    CCLayer *_gameLayer;
 }
 
 @property (nonatomic, assign) CGPoint velocity;
@@ -18,8 +20,9 @@
 @property (nonatomic, assign) BOOL onGround;
 @property (nonatomic, assign) float lifeTime;
 
-+(id)initRandom;
--(void)update:(ccTime)dt;
+- (id)initWithSpaceManager:(SpaceManagerCocos2d *)spaceManager gameLayer:(CCLayer*)gmaeLAyer location:(CGPoint)location spriteFrameName:(NSString *)spriteFrameName;
++(id)initRandomWithSpaceManager:(SpaceManagerCocos2d *)spaceManager gameLayer:(CCLayer*)gmaeLAyer location:(CGPoint)location;
 -(CGRect)collisionBoundingBox;
+-(void) remove;
 
 @end

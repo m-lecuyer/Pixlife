@@ -21,16 +21,21 @@
 @synthesize minMoveDuration = _minMoveDuration;
 @synthesize maxMoveDuration = _maxMoveDuration;
 
--(void)youRDeadInLayer:(GameLevelLayer *)layer
+-(void)youRDeadInLayer:(GameLevelLayer *)layer withManager:(SpaceManagerCocos2d *)smgr
 {
     for (int i = 0; i < AMMO_FOR_MONSTER_DEATH + self.hpBase; i++) {
-        Ammunition *ammo = [Ammunition initRandom];
-        ammo.position = self.position;
+        Ammunition *ammo = [Ammunition initRandomWithSpaceManager:smgr gameLayer:layer location:self.position];
+        float vx = ((float)(arc4random() % 300 - 150))/100.0f;
+        float vy = ((float)(arc4random() % 10))/10.0f;
+        [ammo applyImpulse:cpv(vx, vy)];
+        [layer addChild:ammo];
+        [layer.ammunitions addObject:ammo];
+        /*ammo.position = self.position;
         int vx = arc4random() % 300 - 150;
         int vy = arc4random() % 150;
         ammo.velocity = ccp(vx, vy);
         [layer addChild:ammo];
-        [layer.ammunitions addObject:ammo];
+        [layer.ammunitions addObject:ammo];*/
     }
     layer.player.ammoTot += AMMO_FOR_MONSTER_DEATH + self.hpBase;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"sound"])

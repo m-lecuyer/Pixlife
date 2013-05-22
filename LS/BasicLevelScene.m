@@ -13,9 +13,15 @@
 #import "Ammunition.h"
 #import "GameResult.h"
 #import "MusicManager.h"
+#import "chipmunk.h"
+#import "SpaceManager.h"
+#import "SpaceManagerCocos2d.h"
 
 @interface GameLevelLayer() 
 {
+    cpSpace *space;
+    SpaceManagerCocos2d *smgr;
+    
     CCTMXTiledMap *map;
     CCTMXLayer *walls;
     NSMutableArray *_monsters;
@@ -64,6 +70,8 @@
         self.isAccelerometerEnabled = YES;
         //[[UIAccelerometer sharedAccelerometer] setUpdateInterval:1/60];
         
+        [self createCMSpace];
+
         _monsters = [[NSMutableArray alloc] init];
         _projectiles = [[NSMutableArray alloc] init];
         _ammunitions = [[NSMutableArray alloc] init];
@@ -78,17 +86,13 @@
         } else {
             map = [[CCTMXTiledMap alloc] initWithTMXFile:@"basic_level.tmx"];
         }
-
         [self addChild:map];
         walls = [map layerNamed:@"walls"];
+        // we have the map so we can create the ground
+        [self createGround];
         
         // player
-        player = [[Character alloc] initWithFile:@"astronaute.png"];
-        player.gameLayer = self;
-        //player.scale = 2.0;
-        //[player.texture setAliasTexParameters];
-        player.position = ccp(size.width/2, 150);
-        [map addChild:player z:15];
+        [self createPlayer];
         
         // Jump buttons
         CCMenuItem *buttonJumpLeft = [CCMenuItemImage itemWithNormalImage:@"jump_up.png" selectedImage:@"jump_down.png" target:player selector:@selector(jump)];
@@ -160,9 +164,45 @@
 
         //[self schedule:@selector(update:)];
         [self schedule:@selector(gameLogic:) interval:1.0];
-        [self scheduleUpdateWithPriority:-1];
+        [self scheduleUpdateWithPriority:10];
 	}
 	return self;
+}
+
+- (void) createCMSpace
+{
+    space = cpSpaceNew();
+    smgr = [[SpaceManagerCocos2d alloc] initWithSpace:space];
+    space->gravity = ccp(0, -500);
+    [smgr addWindowContainmentWithFriction:1.0f elasticity:0.3f inset:cpvzero radius:1.0f];
+    [smgr start:1.0/60.0];
+    [smgr addCollisionCallbackBetweenType:[Character class] otherType:[Ammunition class] target:self selector:@selector(handlePlayerAmmoCollision:arbiter:space:)];
+}
+
+- (void) createGround
+{
+    cpBody *groundBody = [smgr staticBody];
+    groundBody->p = ccp(0,0);
+    for (int i = 0; i < map.mapSize.width ; i++) {
+        for (int j = 0 ; j < map.mapSize.height ; j++) {
+            CGPoint tilePos = ccp(i, j);
+            [walls tileAt:tilePos];
+            if ([walls tileGIDAt:tilePos]) {
+                CGPoint or = [self tileRectFromTileCoords:tilePos].origin;
+                cpShape *groundShape = [smgr addRectToBody:groundBody width:TILE_SIZE height:TILE_SIZE rotation:0.0f offset:cpv(or.x+TILE_SIZE/2, or.y+TILE_SIZE/2)];
+                groundShape->e = 0.0; // elasticity
+                groundShape->u = 1.0; // friction
+            }
+        }
+    }
+}
+
+- (void) createPlayer
+{
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    
+    player = [[Character alloc] initWithSpaceManager:smgr gameLayer:self location:ccp(winSize.width/2, 250) spriteFrameName:@"astronaute.png"];
+    [map addChild:player z:15];
 }
 
 - (void) pauseGame
@@ -178,20 +218,6 @@
 
 -(void)update:(ccTime)dt
 {
-    [player update:dt];
-    NSMutableArray *ammoToRemove = [NSMutableArray array];
-    for (Ammunition *a in _ammunitions) {
-        [a update:dt];
-        if (a.lifeTime > AMMO_LIFE_TIME || !CGRectIntersectsRect(a.boundingBox, self.boundingBox)) {
-            [ammoToRemove addObject:a];
-        }
-        [self checkForAndResolveCollisions:a withBox:false];
-    }
-    for (Ammunition *a in ammoToRemove) {
-        [self removeChild:a cleanup:YES];
-        [_ammunitions removeObject:a];
-    }
-    
     for (CCSprite *b in [self bulletWallsCollisions:self.projectiles]) {
         [self removeChild:b cleanup:YES];
         [_projectiles removeObject:b];
@@ -200,8 +226,20 @@
     [self checkForAndResolveCollisions:player withBox:true];
     [self bulletMonsterCollision];
     [self playerMonterCollision];
-    [self playerAmmoCollision];
     [self playerMonsterAmmoCollision];
+}
+
+- (bool)handlePlayerAmmoCollision:(CollisionMoment)moment arbiter:(cpArbiter*)arbiter space:(SpaceManagerCocos2d*)space
+{
+    CP_ARBITER_GET_SHAPES(arbiter, playerShape, ammoShape);
+    Ammunition *a = (Ammunition *)ammoShape->data;
+    if ([_ammunitions containsObject:a]) {
+        player.hp += 1;
+        player.ammoTaken += 1;
+        [a remove];
+    }
+    
+    return YES;
 }
 
 - (CGPoint)tileCoordForPosition:(CGPoint)position 
@@ -325,7 +363,7 @@
             }
         } 
     }
-    p.position = p.desiredPosition;
+//p.position = p.desiredPosition;
 }
 
 -(NSArray *)bulletWallsCollisions:(NSArray *)bullets
@@ -441,7 +479,7 @@
         
         for (Monster *target in targetsToDelete) {
             player.monsterKilled += 1;
-            [target youRDeadInLayer:self];
+            [target youRDeadInLayer:self withManager:smgr];
             [_monsters removeObject:target];
         }
         
@@ -503,25 +541,6 @@
     [monstersAmmoToDelete release];
 }
 
--(void)playerAmmoCollision
-{
-    CGRect playerRect = CGRectInset(player.boundingBox, 2, 0);
-    
-    NSMutableArray *ammoToDelete = [NSMutableArray array];
-    for (CCSprite *a in _ammunitions) {
-        CGRect ammoRect = CGRectInset(a.boundingBox, 0, 0);
-        if (CGRectIntersectsRect(playerRect, ammoRect)) {
-            [ammoToDelete addObject:a];
-            player.hp += 1;
-            player.ammoTaken += 1;
-        }
-    }
-    
-    for (CCSprite *a in ammoToDelete) {
-        [_ammunitions removeObject:a];
-        [self removeChild:a cleanup:YES];
-    }
-}
 
 - (void) accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {

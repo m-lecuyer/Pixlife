@@ -12,6 +12,13 @@
 #import "Shotgun.h"
 #import "ls_includes.h"
 #import "SimpleAudioEngine.h"
+#import "chipmunk.h"
+
+@interface Character () {
+    BOOL canBeDestroyed;
+}
+
+@end
 
 @implementation Character
 
@@ -35,16 +42,21 @@
 @synthesize pointsLabel = _pointsLabel;
 @synthesize lvlLabel = _lvlLabel;
 
--(id)initWithFile:(NSString *)filename 
+
+- (id)initWithSpaceManager:(SpaceManagerCocos2d *)spaceManager gameLayer:(CCLayer*)gmaeLAyer location:(CGPoint)location spriteFrameName:(NSString *)spriteFrameName
 {
-    if (self = [super initWithFile:filename]) {
+    if ((self = [super initWithFile:spriteFrameName])) {
+        self.shape = [spaceManager addRectAt:location mass:1.0 width:self.contentSize.width height:self.contentSize.height rotation:0];
+        self.shape->data = self;
+        self.shape->collision_type = [self class];
+        cpBodySetMoment(self.body, INFINITY);
+        self.shape->e = 0.0f;
         _time = _monsterTot = _monsterTot = _monsterKilled = _ammoTot = _ammoTaken = 0;
         _lvl = 1;
-
         _points = 0;
         _hp = INITIAL_HP;
         self.weapon = [Shotgun weapon];
-        self.velocity = ccp(0.0, 0.0);
+        self.velocity = ccp(0.0, 0.0);        
     }
     return self;
 }
@@ -138,8 +150,11 @@
     if (_hp == 0 || [gameLayer isInPause])
         return;
 
-    if (self.onGround)
-        self.velocity = ccp(self.velocity.x, self.velocity.y + 300);
+    //if (self.onGround) {
+    [self applyImpulse:cpv(0, 300)];
+        /*cpVect v = ccp(body->v.x, body->v.y+300);
+        body->v = v;*/
+    //}
 }
 
 -(void)fireAt:(CGPoint)touch inLayer:(GameLevelLayer *)layer

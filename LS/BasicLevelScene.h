@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "SpaceManagerCocos2d.h"
 
 @protocol wallCollision <NSObject>
 
@@ -24,6 +25,7 @@
 
 @interface GameLevelLayer : CCLayer {
     Character *player;
+    SpaceManagerCocos2d *_smgr;
 }
 
 @property (getter = isInPause) BOOL pause;
