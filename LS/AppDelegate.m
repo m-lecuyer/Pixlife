@@ -111,7 +111,7 @@
                                              selector:@selector(startAds)
                                                  name:@"ads" object:nil];
 
-    CGSize size = [[CCDirector sharedDirector] winSize];
+    //CGSize size = [[CCDirector sharedDirector] winSize];
 
     // iAd
     iAd = [[ADBannerView alloc] initWithFrame:CGRectZero];
@@ -119,7 +119,7 @@
     iAd.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
 
     CGRect r = iAd.frame;
-    r.origin.x = size.width-r.size.width;
+    //r.origin.x = size.width-r.size.width;
     [iAd setFrame:r];
     iAdIsVisible = NO;
     iAd.frame = CGRectOffset(iAd.frame, 0, -iAd.frame.size.height);
@@ -136,6 +136,7 @@
     admobLoaded = NO;
     // Specify the ad's "unit identifier". This is your AdMob Publisher ID.
     bannerView_.adUnitID = @"a151859a0d6c329";
+    bannerView_.delegate = self;
     // Let the runtime know which UIViewController to restore after taking
     // the user wherever the ad goes and add it to the view hierarchy.
     bannerView_.rootViewController = window_.rootViewController;
