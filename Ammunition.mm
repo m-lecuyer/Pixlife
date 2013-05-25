@@ -44,6 +44,8 @@
         ammoShapeDef.density = 0.1f;
         ammoShapeDef.friction = 10.0f;
         ammoShapeDef.restitution = 0.1f;
+        ammoShapeDef.filter.categoryBits = CATEGORY_AMMO;
+        ammoShapeDef.filter.maskBits = MASK_AMMO;
         _ammoFixture = _ammoBody->CreateFixture(&ammoShapeDef);
         
         //self.shape = [spaceManager addRectAt:location mass:0.01 width:self.contentSize.width height:self.contentSize.height rotation:0];        

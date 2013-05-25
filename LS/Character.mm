@@ -44,11 +44,11 @@
 @synthesize lvlLabel = _lvlLabel;
 
 
-- (id)initWithSpaceManager:(b2World *)world gameLayer:(CCLayer*)gameLAyer location:(CGPoint)location spriteFrameName:(NSString *)spriteFrameName
+- (id)initWithSpaceManager:(b2World *)world gameLayer:(GameLevelLayer*)gameLAyer location:(CGPoint)location spriteFrameName:(NSString *)spriteFrameName
 {
     if ((self = [super initWithFile:spriteFrameName])) {
         _world = world;
-        self.gameLayer = gameLayer;
+        self.gameLayer = gameLAyer;
         self.tag = 1;
         
         b2BodyDef characterBodyDef;
@@ -65,6 +65,8 @@
         characterShapeDef.density = 10.0f;
         characterShapeDef.friction = 0.1f;
         characterShapeDef.restitution = 0.2f;
+        characterShapeDef.filter.categoryBits = CATEGORY_PLAYER;
+        characterShapeDef.filter.maskBits = MASK_PLAYER;
         _characterFixture = _characterBody->CreateFixture(&characterShapeDef);
 
         _time = _monsterTot = _monsterTot = _monsterKilled = _ammoTot = _ammoTaken = 0;

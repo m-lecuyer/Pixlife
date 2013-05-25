@@ -195,17 +195,26 @@ static GameLevelLayer *layer;
     groundBoxDef.shape = &groundBox;
     
     groundBox.Set(b2Vec2(0,0), b2Vec2(winSize.width/PTM_RATIO, 0));
+    groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
+    groundBoxDef.filter.maskBits = MASK_GROUND;
     _groundBody->CreateFixture(&groundBoxDef);
     
     groundBox.Set(b2Vec2(0,0), b2Vec2(0, winSize.height/PTM_RATIO));
+    groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
+    groundBoxDef.filter.maskBits = MASK_GROUND;
     _groundBody->CreateFixture(&groundBoxDef);
     
     groundBox.Set(b2Vec2(0, winSize.height/PTM_RATIO), b2Vec2(winSize.width/PTM_RATIO,
                                                               winSize.height/PTM_RATIO));
+    groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
+    groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
+    groundBoxDef.filter.maskBits = MASK_GROUND;
     _groundBody->CreateFixture(&groundBoxDef);
     
     groundBox.Set(b2Vec2(winSize.width/PTM_RATIO, winSize.height/PTM_RATIO),
                   b2Vec2(winSize.width/PTM_RATIO, 0));
+    groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
+    groundBoxDef.filter.maskBits = MASK_GROUND;
     _groundBody->CreateFixture(&groundBoxDef);
     
     // Create contact listener
@@ -234,6 +243,8 @@ static GameLevelLayer *layer;
                 tileShapeDef.density = 100.0f;
                 tileShapeDef.friction = 0.1f;
                 tileShapeDef.restitution = 0.0f;
+                tileShapeDef.filter.categoryBits = CATEGORY_GROUND;
+                tileShapeDef.filter.maskBits = MASK_GROUND;
                 _body->CreateFixture(&tileShapeDef);
             }
         }
@@ -369,78 +380,6 @@ static GameLevelLayer *layer;
     return (NSArray *)gids;
 }
 
--(void)checkForAndResolveCollisions:(CCSprite<wallCollision> *)p withBox:(BOOL)isBox
-{
-    
-    int tileInit = isBox ? 1 : 0;
-    NSArray *tiles = [self getSurroundingTilesAtPosition:p.position forLayer:walls initValue:tileInit];
-    
-    p.onGround = NO;
-    for (NSDictionary *dic in tiles) {
-        CGRect pRect = [p collisionBoundingBox];
-        int gid = [[dic objectForKey:@"gid"] intValue];
-        if (gid) {
-            CGRect tileRect = [self tileRectFromTileCoords:[[dic objectForKey:@"tilePos"] CGPointValue]];
-            if (CGRectIntersectsRect(pRect, tileRect)) {
-                CGRect intersection = CGRectIntersection(pRect, tileRect);
-                int tileIndx = [tiles indexOfObject:dic];
-                int x, y;
-                switch (tileIndx) {
-                    case 0:
-                        //tile is directly below player
-                        p.desiredPosition = ccp(p.desiredPosition.x, p.desiredPosition.y + intersection.size.height);
-                        p.velocity = ccp(p.velocity.x, 0.0);
-                        p.onGround = YES;
-                        break;
-                    case 1:
-                        //tile is directly above player
-                        p.desiredPosition = ccp(p.desiredPosition.x, p.desiredPosition.y - intersection.size.height);
-                        p.velocity = ccp(p.velocity.x, 0.0);
-                        break;
-                    case 2:
-                        //tile is left of player
-                        p.desiredPosition = ccp(p.desiredPosition.x + intersection.size.width, p.desiredPosition.y);
-                        break;
-                    case 3:
-                        //tile is right of player
-                        p.desiredPosition = ccp(p.desiredPosition.x - intersection.size.width, p.desiredPosition.y);
-                        break;
-                    case 8:
-                        //Tile in the middle of the object
-                        x = ((p.desiredPosition.x - p.position.x) >= 0) ? 1 : -1;;
-                        x = p.desiredPosition.x - x * intersection.size.width;
-                        x = ((p.desiredPosition.y - p.position.y) >= 0) ? 1 : -1;;
-                        x = p.desiredPosition.y - y * intersection.size.height;
-                        p.desiredPosition = ccp(x, y);
-                        break;
-                    default:
-                        if (intersection.size.width > intersection.size.height) {
-                            //tile is diagonal, but resolving collision vertially
-                            p.velocity = ccp(p.velocity.x, 0.0);
-                            float resolutionHeight;
-                            if (tileIndx > 5) {
-                                resolutionHeight = intersection.size.height;
-                                p.onGround = YES;
-                            } else {
-                                resolutionHeight = -intersection.size.height;
-                            }
-                            p.desiredPosition = ccp(p.desiredPosition.x, p.desiredPosition.y + resolutionHeight);
-                        } else {
-                            float resolutionWidth;
-                            if (tileIndx == 6 || tileIndx == 4) {
-                                resolutionWidth = intersection.size.width;
-                            } else {
-                                resolutionWidth = -intersection.size.width;
-                            }
-                            p.desiredPosition = ccp(p.desiredPosition.x + resolutionWidth, p.desiredPosition.y);
-                        } 
-                        break;
-                }
-            }
-        } 
-    }
-//p.position = p.desiredPosition;
-}
 
 -(NSArray *)bulletWallsCollisions:(NSArray *)bullets
 {
@@ -630,7 +569,7 @@ static GameLevelLayer *layer;
     else if(orientation == UIInterfaceOrientationLandscapeRight)
         oR = -1;
 
-    player.characterBody->ApplyForceToCenter(b2Vec2(oR * acceleration.y/ABS(acceleration.y) * 1000.0f,0));
+    player.characterBody->ApplyForceToCenter(b2Vec2(oR * acceleration.y/ABS(acceleration.y) * 500.0f,0));
 }
 
 -(void)gameLogic:(ccTime)dt

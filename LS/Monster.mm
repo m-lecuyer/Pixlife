@@ -25,13 +25,13 @@
 {
     for (int i = 0; i < AMMO_FOR_MONSTER_DEATH + self.hpBase; i++) {
         Ammunition *ammo = [Ammunition initRandomWithSpaceManager:world gameLayer:layer location:self.position];
-        float vy = ((float)(arc4random() % 30) - 15.0f)/60.0f;
-        float vx = ((float)(arc4random() % 10))/30.0f;
-        //[ammo applyImpulse:cpv(vx, vy)];
+        int signx = (arc4random() % 2) * 2 - 1;
+        int signy = (arc4random() % 2) * 2 - 1;
+        float vx = signx * ((float)(arc4random() % 100) + 25.0f)/1800.0f;
+        float vy = signy * ((float)(arc4random() % 10))/250.0f;
         [layer addChild:ammo];
         [layer.ammunitions addObject:ammo];
-        
-        b2Vec2 force = b2Vec2(vy, vx);
+        b2Vec2 force = b2Vec2(vx, vy);
         ammo.ammoBody->ApplyLinearImpulse(force, ammo.ammoBody->GetPosition());
     }
     layer.player.ammoTot += AMMO_FOR_MONSTER_DEATH + self.hpBase;
