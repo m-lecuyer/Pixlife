@@ -37,5 +37,7 @@
 +(GameLevelLayer*) sharedGameLayer;
 -(void)gameOver;
 -(void) beginContactBetweenSprite:(CCSprite *)a andSprite:(CCSprite *)b;
+-(CGRect)tileRectFromTileCoords:(CGPoint)tileCoords;
+- (void) createGround;
 
 @end

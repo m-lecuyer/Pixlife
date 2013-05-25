@@ -224,7 +224,25 @@ static GameLevelLayer *layer;
 
 - (void) createGround
 {
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    
+    // Create edges around the entire screen
     b2BodyDef groundBodyDef;
+    groundBodyDef.position.Set(0,0);
+    b2Body *_groundBody = _world->CreateBody(&groundBodyDef);
+    
+    b2EdgeShape groundBox;
+    b2FixtureDef groundBoxDef;
+    groundBoxDef.shape = &groundBox;
+    
+    groundBox.Set(b2Vec2(0,4*TILE_SIZE/PTM_RATIO), b2Vec2(winSize.width/PTM_RATIO, 4*TILE_SIZE/PTM_RATIO));
+    groundBoxDef.friction = 0.6f;
+    groundBoxDef.restitution = 0.0f;
+    groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
+    groundBoxDef.filter.maskBits = MASK_GROUND;
+    _groundBody->CreateFixture(&groundBoxDef);
+
+    /*b2BodyDef groundBodyDef;
     //groundBodyDef.type = b2_staticBody;
     groundBodyDef.position.Set(0, 0);
     groundBodyDef.type = b2_staticBody;
@@ -248,7 +266,7 @@ static GameLevelLayer *layer;
                 _body->CreateFixture(&tileShapeDef);
             }
         }
-    }
+    }*/
 }
 
 - (void) createPlayer
@@ -278,17 +296,15 @@ static GameLevelLayer *layer;
             CCSprite *sprite = (CCSprite *)b->GetUserData();
             
             if (sprite.tag == 1) { //player
-                static int maxSpeed = 10;
+                static float maxSpeed = 8.0f;
                 
                 b2Vec2 velocity = b->GetLinearVelocity();
                 float32 speed = velocity.Length();
-                
                 if (speed > maxSpeed) {
-                    b->SetLinearDamping(0.5);
+                    b->SetLinearDamping(2.0);
                 } else if (speed < maxSpeed) {
                     b->SetLinearDamping(0.0);
                 }
-                
             }
             
             if (sprite.tag == 2) { //ammo
@@ -434,10 +450,8 @@ static GameLevelLayer *layer;
     /* not always a wave */
     if (waveN <= 2+_prevWavN) {
         waveN = 0;
-    } else if (waveN <= 8) {
-        waveN = 1;
     } else {
-        waveN = 2;
+        waveN = 1;
     }
     _prevWavN = waveN;
     for (int i = 0 ; i < waveN ; i ++) {
@@ -451,17 +465,18 @@ static GameLevelLayer *layer;
             j++;
         }
     }
+    
+    // if wave, no single
+    if (_prevWavN > 0)
+        return;
 
     int monsterN = arc4random() % (level + 1);
     /* not always a monster */
     if (monsterN == 0) {
         return;
-    } else if (monsterN <= 6) {
-        monsterN = 1;
     } else {
-        monsterN = 2;
+        monsterN = 1;
     }
-    monsterN -= waveN;
     for (int i = 0 ; i < monsterN ; i ++) {
         Monster *target = [Monster generateMonsterForLevel:level];
         [target positionAndMoveInLayer:self withDelay:(float)i/(float)monsterN];
@@ -569,15 +584,15 @@ static GameLevelLayer *layer;
     else if(orientation == UIInterfaceOrientationLandscapeRight)
         oR = -1;
 
-    player.characterBody->ApplyForceToCenter(b2Vec2(oR * acceleration.y/ABS(acceleration.y) * 500.0f,0));
+    player.characterBody->ApplyForceToCenter(b2Vec2(oR * acceleration.y/ABS(acceleration.y) * 1000.0f,0));
 }
 
 -(void)gameLogic:(ccTime)dt
 {
     // update lvl
     player.time += 1;
-    int lvl = player.points/(player.lvl*player.lvl*5) + 1;
-    player.lvl = min(max(lvl, player.lvl), 10);
+    int lvl = player.points/(player.lvl*player.lvl*MAX(1, player.lvl-3)) + 1;
+    player.lvl = min(max(lvl, player.lvl), 20);
     // add tagets
     [self addTarget];
 }

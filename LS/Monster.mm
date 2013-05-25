@@ -16,6 +16,8 @@
 
 @implementation Monster
 
+static float _p;
+
 @synthesize hpBase = _hpBase;
 @synthesize hp = _curHp;
 @synthesize minMoveDuration = _minMoveDuration;
@@ -27,8 +29,8 @@
         Ammunition *ammo = [Ammunition initRandomWithSpaceManager:world gameLayer:layer location:self.position];
         int signx = (arc4random() % 2) * 2 - 1;
         int signy = (arc4random() % 2) * 2 - 1;
-        float vx = signx * ((float)(arc4random() % 100) + 25.0f)/1800.0f;
-        float vy = signy * ((float)(arc4random() % 10))/250.0f;
+        float vx = signx * ((float)(arc4random() % 100) + 25.0f)/4000.0f;
+        float vy = signy * ((float)(arc4random() % 10))/500.0f;
         [layer addChild:ammo];
         [layer.ammunitions addObject:ammo];
         b2Vec2 force = b2Vec2(vx, vy);
@@ -69,6 +71,8 @@
 
 +(Monster*) generateMonsterForLevel:(int)lvl
 {
+    _p = 0.9f + ((float)lvl) / 20.0f;
+    NSLog(@"P %f", _p);
     Monster *target = nil;
     int mLvl = arc4random() % lvl;
     int mType;
@@ -168,6 +172,8 @@
 
 +(NSArray*) generateWave:(int)lvl
 {
+    _p = 0.9f + ((float)lvl) / 20.0f;
+    NSLog(@"P %f", _p);
     int mType = arc4random() % lvl;
     switch (mType) {
         case 0:
@@ -191,7 +197,7 @@
 }
 
 +(NSArray*) wave1 {
-    return [NSArray arrayWithObjects:[WeakAndFastMonster monster], [WeakAndFastMonster monster], [StrongAndSlowMonster monster], nil];
+    return [NSArray arrayWithObjects:[WeakAndFastMonster monster], [StrongAndSlowMonster monster], nil];
 }
 
 +(NSArray*) wave2 {
@@ -199,15 +205,15 @@
 }
 
 +(NSArray*) wave3 {
-    return [NSArray arrayWithObjects:[RunningMonster monster], [RunningMonster monster], [RunningMonster monster], nil];
+    return [NSArray arrayWithObjects:[RunningMonster monster], [RunningMonster monster], nil];
 }
 
 +(NSArray*) wave4 {
-    return [NSArray arrayWithObjects:[RunningMonsterStrong monster], [RunningMonsterStrong monster], [RunningMonsterStrong monster], nil];
+    return [NSArray arrayWithObjects:[RunningMonsterStrong monster], [RunningMonsterStrong monster], nil];
 }
 
 +(NSArray*) wave5 {
-    return [NSArray arrayWithObjects:[FiringMonsterStrong monster], [FiringMonsterStrong monster], [FiringMonsterStrong monster], nil];
+    return [NSArray arrayWithObjects:[FiringMonsterStrong monster], [FiringMonsterStrong monster], nil];
 }
 
 +(NSArray*) wave6 {
@@ -219,7 +225,7 @@
 }
 
 +(NSArray*) wave8 {
-    return [NSArray arrayWithObjects:[FollowingMonster monster], [FiringMonsterStrong monster], [RunningMonsterStrong monster], [FollowingMonster monster], [RunningMonsterStrong monster], nil];
+    return [NSArray arrayWithObjects:[FollowingMonster monster], [RunningMonsterStrong monster], [FiringMonsterStrong monster], nil];
 }
 
 @end
@@ -229,9 +235,10 @@
 + (id)monster {
     WeakAndFastMonster *monster = nil;
     if ((monster = [[[super alloc] initWithFile:@"m0.png"] autorelease])) {
-        monster.hp = monster.hpBase = 1;
-        monster.minMoveDuration = 3;
-        monster.maxMoveDuration = 5;
+        monster.hpBase = 1;
+        monster.hp = floor(_p * monster.hpBase);
+        monster.minMoveDuration = (3.0 / _p);
+        monster.maxMoveDuration = (5.0 / _p);
     }
     return monster;
 }
@@ -273,9 +280,10 @@
 + (id)monster {
     StrongAndSlowMonster *monster = nil;
     if ((monster = [[[super alloc] initWithFile:@"m1.png"] autorelease])) {
-        monster.hp = monster.hpBase = 4;
-        monster.minMoveDuration = 8;
-        monster.maxMoveDuration = 12;
+        monster.hpBase = 4;
+        monster.hp = floor(_p * monster.hpBase);
+        monster.minMoveDuration = (8.0 / _p);
+        monster.maxMoveDuration = (12.0 / _p);
     }
     return monster;
 }
@@ -317,9 +325,10 @@
 + (id)monster {
     FiringMonster *monster = nil;
     if ((monster = [[[super alloc] initWithFile:@"m5.png"] autorelease])) {
-        monster.hp = monster.hpBase = 1;
-        monster.minMoveDuration = 10;
-        monster.maxMoveDuration = 10;
+        monster.hpBase = 1;
+        monster.hp = floor(_p * monster.hpBase);
+        monster.minMoveDuration = (10.0  / _p);
+        monster.maxMoveDuration = (10.0 / _p);
     }
     return monster;
 }
@@ -423,9 +432,10 @@
 + (id)monster {
     RunningMonster *monster = nil;
     if ((monster = [[[super alloc] initWithFile:@"m2.png"] autorelease])) {
-        monster.hp = monster.hpBase = 1;
-        monster.minMoveDuration = 3;
-        monster.maxMoveDuration = 4;
+        monster.hpBase = 1;
+        monster.hp = floor(_p * monster.hpBase);
+        monster.minMoveDuration = (3.0 / _p);
+        monster.maxMoveDuration = (4.0 / _p);
     }
     return monster;
 }
@@ -471,9 +481,10 @@
 + (id)monster {
     RunningMonsterStrong *monster = nil;
     if ((monster = [[[super alloc] initWithFile:@"m3_2.png"] autorelease])) {
-        monster.hp = monster.hpBase = 4;
-        monster.minMoveDuration = 4;
-        monster.maxMoveDuration = 6;
+        monster.hpBase = 4;
+        monster.hp = floor(_p * monster.hpBase);
+        monster.minMoveDuration = (4.0 / _p);
+        monster.maxMoveDuration = (6.0 / _p);
     }
     return monster;
 }
@@ -519,9 +530,10 @@
 + (id)monster {
     FiringMonsterStrong *monster = nil;
     if ((monster = [[[super alloc] initWithFile:@"m7.png"] autorelease])) {
-        monster.hp = monster.hpBase = 5;
-        monster.minMoveDuration = 10;
-        monster.maxMoveDuration = 10;
+        monster.hpBase = 5;
+        monster.hp = floor(_p * monster.hpBase);
+        monster.minMoveDuration = (10.0 / _p);
+        monster.maxMoveDuration = (10.0 / _p);
     }
     return monster;
 }
@@ -589,9 +601,10 @@
 + (id)monster {
     FollowingMonster *monster = nil;
     if ((monster = [[[super alloc] initWithFile:@"m4_2.png"] autorelease])) {
-        monster.hp = monster.hpBase = 1;
-        monster.minMoveDuration = 8;
-        monster.maxMoveDuration = 12;
+        monster.hpBase = 1;
+        monster.hp = floor(_p * monster.hpBase);
+        monster.minMoveDuration = 8.0 / _p;
+        monster.maxMoveDuration = 12.0 / _p;
     }
     return monster;
 }
@@ -621,7 +634,7 @@
         
     // Determine speed of the target
     float time = 0.2;
-    float speed = 180.0 + (arc4random() % 70);
+    float speed = 180.0 * _p + (arc4random() % 70);
     CGPoint destination = ccpAdd(self.position, ccpMult(direction, speed * time));
     
     // Create the actions

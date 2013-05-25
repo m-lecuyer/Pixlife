@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "BasicLevelScene.h"
 #import "MusicManager.h"
+#import "FirstLevelLayer.h"
 
 #pragma mark - HelloWorldLayer
 

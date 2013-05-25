@@ -63,7 +63,7 @@
         b2FixtureDef characterShapeDef;
         characterShapeDef.shape = &characterShape;
         characterShapeDef.density = 10.0f;
-        characterShapeDef.friction = 0.1f;
+        characterShapeDef.friction = 0.4f;
         characterShapeDef.restitution = 0.2f;
         characterShapeDef.filter.categoryBits = CATEGORY_PLAYER;
         characterShapeDef.filter.maskBits = MASK_PLAYER;

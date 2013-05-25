@@ -14,14 +14,14 @@
 @interface Monster : CCSprite {
     int _hpBase;
     int _curHp;
-    int _minMoveDuration;
-    int _maxMoveDuration;
+    float _minMoveDuration;
+    float _maxMoveDuration;
 }
 
 @property (nonatomic, assign) int hp;
 @property (nonatomic, assign) int hpBase;
-@property (nonatomic, assign) int minMoveDuration;
-@property (nonatomic, assign) int maxMoveDuration;
+@property (nonatomic, assign) float minMoveDuration;
+@property (nonatomic, assign) float maxMoveDuration;
 
 -(void) youRDeadInLayer:(GameLevelLayer *)layer withManager:(b2World *)world;
 -(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay;

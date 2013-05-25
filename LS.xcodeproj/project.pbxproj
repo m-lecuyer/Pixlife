@@ -58,6 +58,7 @@
 		C751AA7E16152E1C00FC7C6F /* jump_up.png in Resources */ = {isa = PBXBuildFile; fileRef = C751AA7A16152E1C00FC7C6F /* jump_up.png */; };
 		C75E460C160806330016D0F4 /* Ammunition.mm in Sources */ = {isa = PBXBuildFile; fileRef = C75E460B160806330016D0F4 /* Ammunition.mm */; };
 		C76FA5BE17504C4A00D3619F /* MyContactListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = C76FA5BD175049E100D3619F /* MyContactListener.mm */; };
+		C774BA2917514CDE0063DB5C /* FirstLevelLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C774BA2817514CDE0063DB5C /* FirstLevelLayer.mm */; };
 		C789572415F297A20058A6BD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C789572315F297A20058A6BD /* QuartzCore.framework */; };
 		C789572615F297A20058A6BD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C789572515F297A20058A6BD /* OpenGLES.framework */; };
 		C789572815F297A20058A6BD /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C789572715F297A20058A6BD /* OpenAL.framework */; };
@@ -311,6 +312,8 @@
 		C75E460B160806330016D0F4 /* Ammunition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Ammunition.mm; sourceTree = "<group>"; };
 		C76FA5BC175049E100D3619F /* MyContactListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyContactListener.h; sourceTree = "<group>"; };
 		C76FA5BD175049E100D3619F /* MyContactListener.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MyContactListener.mm; sourceTree = "<group>"; };
+		C774BA2717514CDE0063DB5C /* FirstLevelLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstLevelLayer.h; sourceTree = "<group>"; };
+		C774BA2817514CDE0063DB5C /* FirstLevelLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FirstLevelLayer.mm; sourceTree = "<group>"; };
 		C789571F15F297A20058A6BD /* LS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C789572315F297A20058A6BD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C789572515F297A20058A6BD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1259,6 +1262,8 @@
 			children = (
 				C78958CD15F29B820058A6BD /* BasicLevelScene.h */,
 				C78958CE15F29B820058A6BD /* BasicLevelScene.mm */,
+				C774BA2717514CDE0063DB5C /* FirstLevelLayer.h */,
+				C774BA2817514CDE0063DB5C /* FirstLevelLayer.mm */,
 				C76FA5BC175049E100D3619F /* MyContactListener.h */,
 				C76FA5BD175049E100D3619F /* MyContactListener.mm */,
 				C7A6770E161D3E2200F94847 /* GameResult.h */,
@@ -1806,6 +1811,7 @@
 				C7CFA39A174E824B00E1A204 /* b2WeldJoint.cpp in Sources */,
 				C7CFA39B174E824B00E1A204 /* b2WheelJoint.cpp in Sources */,
 				C7CFA39C174E824B00E1A204 /* b2Rope.cpp in Sources */,
+				C774BA2917514CDE0063DB5C /* FirstLevelLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
