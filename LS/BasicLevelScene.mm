@@ -630,7 +630,7 @@ static GameLevelLayer *layer;
     else if(orientation == UIInterfaceOrientationLandscapeRight)
         oR = -1;
 
-    player.characterBody->ApplyForceToCenter(b2Vec2(oR * 100.0f,0));
+    player.characterBody->ApplyForceToCenter(b2Vec2(oR * acceleration.y/ABS(acceleration.y) * 1000.0f,0));
 }
 
 -(void)gameLogic:(ccTime)dt
