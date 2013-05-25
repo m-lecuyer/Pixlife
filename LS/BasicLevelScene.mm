@@ -20,7 +20,8 @@
 {
     b2World *_world;
     MyContactListener *_contactListener;
-
+    b2Body *_groundBody;
+    
     CCTMXTiledMap *map;
     CCTMXLayer *walls;
     NSMutableArray *_monsters;
@@ -188,7 +189,7 @@ static GameLevelLayer *layer;
     // Create edges around the entire screen
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(0,0);
-    b2Body *_groundBody = _world->CreateBody(&groundBodyDef);
+    b2Body *_boxBody = _world->CreateBody(&groundBodyDef);
     
     b2EdgeShape groundBox;
     b2FixtureDef groundBoxDef;
@@ -197,25 +198,25 @@ static GameLevelLayer *layer;
     groundBox.Set(b2Vec2(0,0), b2Vec2(winSize.width/PTM_RATIO, 0));
     groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
     groundBoxDef.filter.maskBits = MASK_GROUND;
-    _groundBody->CreateFixture(&groundBoxDef);
+    _boxBody->CreateFixture(&groundBoxDef);
     
     groundBox.Set(b2Vec2(0,0), b2Vec2(0, winSize.height/PTM_RATIO));
     groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
     groundBoxDef.filter.maskBits = MASK_GROUND;
-    _groundBody->CreateFixture(&groundBoxDef);
+    _boxBody->CreateFixture(&groundBoxDef);
     
     groundBox.Set(b2Vec2(0, winSize.height/PTM_RATIO), b2Vec2(winSize.width/PTM_RATIO,
                                                               winSize.height/PTM_RATIO));
     groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
     groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
     groundBoxDef.filter.maskBits = MASK_GROUND;
-    _groundBody->CreateFixture(&groundBoxDef);
+    _boxBody->CreateFixture(&groundBoxDef);
     
     groundBox.Set(b2Vec2(winSize.width/PTM_RATIO, winSize.height/PTM_RATIO),
                   b2Vec2(winSize.width/PTM_RATIO, 0));
     groundBoxDef.filter.categoryBits = CATEGORY_GROUND;
     groundBoxDef.filter.maskBits = MASK_GROUND;
-    _groundBody->CreateFixture(&groundBoxDef);
+    _boxBody->CreateFixture(&groundBoxDef);
     
     // Create contact listener
     _contactListener = new MyContactListener();
@@ -229,7 +230,7 @@ static GameLevelLayer *layer;
     // Create edges around the entire screen
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(0,0);
-    b2Body *_groundBody = _world->CreateBody(&groundBodyDef);
+    _groundBody = _world->CreateBody(&groundBodyDef);
     
     b2EdgeShape groundBox;
     b2FixtureDef groundBoxDef;
@@ -342,6 +343,13 @@ static GameLevelLayer *layer;
             player.ammoTaken += 1;
             [_ammoToRemove addObject:a];
         }
+    }
+}
+
+-(void) bodyContactWithBody:(b2Body *)a andBody:(b2Body *)b
+{
+    if ((a == player.characterBody || b == player.characterBody) && (a == _groundBody || b == _groundBody)) {
+        player.onGround = YES;
     }
 }
 

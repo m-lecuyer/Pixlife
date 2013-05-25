@@ -168,14 +168,11 @@
     if (_hp == 0 || [gameLayer isInPause])
         return;
 
-    NSLog(@"JUMP");
-    //if (self.onGround) {
-    //[self applyImpulse:cpv(0, 300)];
-        /*cpVect v = ccp(body->v.x, body->v.y+300);
-        body->v = v;*/
+    if (self.onGround) {
         b2Vec2 force = b2Vec2(0, 50.0f);
         _characterBody->ApplyLinearImpulse(force, _characterBody->GetPosition());
-    //}
+        self.onGround = NO;
+    }
 }
 
 -(void)fireAt:(CGPoint)touch inLayer:(GameLevelLayer *)layer

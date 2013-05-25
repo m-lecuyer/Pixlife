@@ -72,7 +72,6 @@ static float _p;
 +(Monster*) generateMonsterForLevel:(int)lvl
 {
     _p = 0.9f + ((float)lvl) / 20.0f;
-    NSLog(@"P %f", _p);
     Monster *target = nil;
     int mLvl = arc4random() % lvl;
     int mType;
@@ -173,7 +172,6 @@ static float _p;
 +(NSArray*) generateWave:(int)lvl
 {
     _p = 0.9f + ((float)lvl) / 20.0f;
-    NSLog(@"P %f", _p);
     int mType = arc4random() % lvl;
     switch (mType) {
         case 0:

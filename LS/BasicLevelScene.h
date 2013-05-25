@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-
 @protocol wallCollision <NSObject>
 
 @property (nonatomic, assign) BOOL onGround;

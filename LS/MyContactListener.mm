@@ -16,7 +16,8 @@ void MyContactListener::BeginContact(b2Contact* contact)
     
 	// This is only true if for example a sprite touched something in your box2d simulation that was not a sprite such as the ground
 	// You may not want to return here, so keep that in mind
-	if(actorA == nil || actorB == nil) return;
+	if(actorA == nil || actorB == nil)
+        [[GameLevelLayer sharedGameLayer] bodyContactWithBody:fixtureA->GetBody() andBody:fixtureB->GetBody()];
     
 	// Information about the collision, such as where it hit exactly on each body
 	b2WorldManifold* worldManifold = new b2WorldManifold();
