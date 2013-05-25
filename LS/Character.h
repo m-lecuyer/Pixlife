@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "BasicLevelScene.h"
-#import "SpaceManagerCocos2d.h"
+#import "Box2D.h"
 
 @class Weapon;
 @class GameLevelLayer;
 
-@interface Character : cpCCSprite <wallCollision> {
+@interface Character : CCSprite {
     GameLevelLayer *gameLayer;
     
     int _lvl;
@@ -36,6 +36,7 @@
 }
 
 @property (nonatomic, retain) GameLevelLayer *gameLayer;
+@property (nonatomic) b2Body *characterBody;
 
 @property (nonatomic, assign) int lvl;
 @property (nonatomic, assign) int time;
@@ -59,8 +60,7 @@
 
 @property (nonatomic, retain) Weapon *weapon;
 
-- (id)initWithSpaceManager:(SpaceManagerCocos2d *)spaceManager gameLayer:(CCLayer*)gmaeLAyer location:(CGPoint)location spriteFrameName:(NSString *)spriteFrameName;
-
+- (id)initWithSpaceManager:(b2World *)world gameLayer:(CCLayer*)gmaeLAyer location:(CGPoint)location spriteFrameName:(NSString *)spriteFrameName;
 -(void)update:(ccTime)dt;
 -(CGRect)collisionBoundingBox;
 -(void)fireAt:(CGPoint)touch inLayer:(GameLevelLayer *)layer;

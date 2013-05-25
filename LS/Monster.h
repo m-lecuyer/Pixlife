@@ -7,7 +7,7 @@
 //
 
 #import "cocos2d.h"
-#import "SpaceManagerCocos2d.h"
+#import "Box2D.h"
 
 @class GameLevelLayer;
 
@@ -23,7 +23,7 @@
 @property (nonatomic, assign) int minMoveDuration;
 @property (nonatomic, assign) int maxMoveDuration;
 
--(void) youRDeadInLayer:(GameLevelLayer *)layer withManager:(SpaceManagerCocos2d *)smgr;
+-(void) youRDeadInLayer:(GameLevelLayer *)layer withManager:(b2World *)world;
 -(void) positionAndMoveInLayer:(CCLayer *)layer withDelay:(float)delay;
 
 +(Monster*) generateMonsterForLevel:(int)lvl;

@@ -6,13 +6,14 @@
 //  Copyright (c) 2012 Polytechnique. All rights reserved.
 //
 
+#define PTM_RATIO 32.0
 #define INITIAL_HP 100
 #define OFFSET_FOR_PROJECTILES 10
 #define PROJECTILE_TAG 2
 #define NUMNER_OF_BULLETS_SHOTGUN 8
 #define HP_LOST_FOR_MONSTER_HIT 10
 #define HP_LOST_FOR_MONSTER_SHOOT 10
-#define AMMO_LIFE_TIME 3
+#define AMMO_LIFE_TIME 4
 #define G 550
 #define AMMO_FOR_MONSTER_DEATH 5
 #define SPEED_OF_PLAYER 250

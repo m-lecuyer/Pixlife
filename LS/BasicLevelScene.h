@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "SpaceManagerCocos2d.h"
+
 
 @protocol wallCollision <NSObject>
 
@@ -25,7 +25,6 @@
 
 @interface GameLevelLayer : CCLayer {
     Character *player;
-    SpaceManagerCocos2d *_smgr;
 }
 
 @property (getter = isInPause) BOOL pause;
@@ -35,6 +34,8 @@
 @property (nonatomic, retain) NSMutableArray *monsterShoot;
 
 +(CCScene *) scene;
++(GameLevelLayer*) sharedGameLayer;
 -(void)gameOver;
+-(void) beginContactBetweenSprite:(CCSprite *)a andSprite:(CCSprite *)b;
 
 @end
