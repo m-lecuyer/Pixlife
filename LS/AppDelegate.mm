@@ -95,9 +95,36 @@
     //GADInterstitial *splashInterstitial_ = [[GADInterstitial alloc] init];
     //splashInterstitial_.adUnitID = @"a151859a0d6c329";
     //[splashInterstitial_ loadAndDisplayRequest:[GADRequest request] usingWindow:window_ initialImage:[UIImage imageNamed:@"Default.png"]];
+    interstitial_ = [[GADInterstitial alloc] init];
+    interstitial_.adUnitID = @"a151859a0d6c329";
+    interstitial_.delegate = self;
+    
+    GADRequest *request = [GADRequest request];
+    [interstitial_ loadRequest:request];
+    adOk = YES;
+    
     [self displayAds];
     
 	return YES;
+}
+
+
+#pragma mark GADInterstitialDelegate
+
+- (void)interstitialDidReceiveAd:(GADInterstitial *)ad {
+    NSLog(@"Received ad successfully");
+    if (adOk) {
+        [interstitial_ presentFromRootViewController:window_.rootViewController];
+    }
+}
+
+- (void)interstitial:(GADInterstitial *)ad
+didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"Failed to receive ad with error: %@", [error localizedFailureReason]);
+}
+
+- (void)interstitialWillDismissScreen:(GADInterstitial *)ad {
+    // Remove the imageView_ once the interstitial is dismissed.
 }
 
 #pragma mark - handle ads

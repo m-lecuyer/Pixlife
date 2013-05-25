@@ -12,7 +12,7 @@
 #import "GADBannerView.h"
 #import "GADInterstitial.h"
 
-@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate, ADBannerViewDelegate, GADBannerViewDelegate>
+@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate, ADBannerViewDelegate, GADBannerViewDelegate, GADInterstitialDelegate>
 {
 	UIWindow *window_;
 	UINavigationController *navController_;
@@ -26,6 +26,8 @@
     BOOL iAdIsVisible;
     BOOL admobIsVisible;
     BOOL admobLoaded;
+    BOOL hideStatusBar_;
+    UIImageView *imageView_;
 }
 
 @property (nonatomic, retain) UIWindow *window;
